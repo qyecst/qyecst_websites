@@ -1,0 +1,120 @@
+(Python venv) pip install flask-apscheduler mistune pygments
+--- back-end ---
+Python:
+    version: v3.6.5
+    from: https://www.python.org/
+    license: PSF license (https://docs.python.org/3/license.html)
+
+APScheduler:
+    version: v3.5.1
+    from: https://github.com/agronholm/apscheduler
+    license: MIT License (https://github.com/agronholm/apscheduler/blob/master/LICENSE.txt)
+
+click:
+    version: v6.7
+    from: https://github.com/pallets/click
+    license: BSD License (https://github.com/pallets/click/blob/master/LICENSE)
+
+Flask:
+    version: v1.0.2
+    from: https://github.com/pallets/flask
+    license: BSD License (https://github.com/pallets/flask/blob/master/LICENSE)
+
+Flask-APScheduler:
+    version: v1.8.0
+    from: https://github.com/viniciuschiele/flask-apscheduler
+    license: Apache 2.0 License (https://github.com/viniciuschiele/flask-apscheduler/blob/master/LICENSE)
+
+itsdangerous:
+    version: v0.24
+    from: https://github.com/pallets/itsdangerous
+    license: BSD License (https://github.com/pallets/itsdangerous/blob/master/LICENSE)
+
+Jinja2:
+    version: v2.10
+    from: https://github.com/pallets/jinja
+    license: BSD License (https://github.com/pallets/jinja/blob/master/LICENSE)
+
+MarkupSafe:
+    version: v1.0
+    from: https://github.com/pallets/markupsafe
+    license: BSD License (https://github.com/pallets/markupsafe/blob/master/LICENSE.rst)
+
+mistune:
+    version: v0.8.3
+    from: https://github.com/lepture/mistune
+    license: BSD License (https://github.com/lepture/mistune/blob/master/LICENSE)
+
+Pygments:
+    version: v2.2.0
+    from: http://pygments.org/
+    license: BSD License (http://pygments.org/faq/?highlight=license)
+
+python-dateutil:
+    version: v2.7.3
+    from: https://github.com/dateutil/dateutil
+    license: [dual license] Apache 2.0 License or the BSD 3-Clause License (https://github.com/dateutil/dateutil#license)
+
+pytz:
+    version: v2018.5
+    from: https://pythonhosted.org/pytz/
+    license: MIT License (https://pythonhosted.org/pytz/#license)
+
+six:
+    version: v1.11.0
+    from: https://pypi.org/project/six/
+    license: MIT License (https://pypi.org/project/six/)
+
+tzlocal:
+    version: v1.5.1
+    from: https://github.com/regebro/tzlocal
+    license: MIT License (https://github.com/regebro/tzlocal/blob/master/LICENSE.txt)
+
+Werkzeug:
+    version: v0.14.1
+    from: https://github.com/pallets/werkzeug
+    license: BSD License (https://github.com/pallets/werkzeug/blob/master/LICENSE)
+
+--- front-end ---
+Bootstrap:
+    version: v4.1.1
+    from: https://getbootstrap.com/
+    license: MIT License (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+
+jQuery:
+    version: v3.3.1
+    from: https://jquery.com/
+    license: MIT License (https://github.com/jquery/jquery/blob/master/LICENSE.txt)
+
+Popper.js:
+    version: v1.14.3
+    from: https://popper.js.org
+    license: MIT License (https://github.com/FezVrasta/popper.js/blob/master/LICENSE.md)
+
+Font Awesome:
+    version: v4.7.0
+    from: https://fontawesome.com/
+    license:
+        font: SIL OFL 1.1 (http://scripts.sil.org/OFL)
+        code: MIT License (http://opensource.org/licenses/mit-license.html)
+        documentation: CC BY 3.0 (http://creativecommons.org/licenses/by/3.0/)
+
+QR Code Generator:
+    version: v1.4.0
+    from: https://github.com/kazuhikoarase/qrcode-generator/tree/master/js
+    license: MIT License (https://github.com/kazuhikoarase/qrcode-generator/blob/master/LICENSE)
+
+Lightbox2 (by Lokesh Dhakar):
+    version: v2.10.0
+    from: https://lokeshdhakar.com/projects/lightbox2/
+    license: MIT License (https://github.com/lokesh/lightbox2/blob/dev/LICENSE)
+
+Pygments CSS:
+    version: Pygments hightlight default CSS style
+    from: http://pygments.org/
+    license: BSD license (http://pygments.org/faq/?highlight=license)
+
+GitHub Markdown CSS:
+    version: v2.10.0
+    from: https://github.com/sindresorhus/github-markdown-css
+    license: MIT License (https://github.com/sindresorhus/github-markdown-css/blob/gh-pages/license)

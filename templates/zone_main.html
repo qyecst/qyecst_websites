@@ -1,0 +1,127 @@
+{# String)content_type, List(Post)) post_list, Integer) current_page, Integer) max_page
+ # Post) post
+ # List(Post)) search_result, String) keytype, String) keyword, Integer) search_current, Integer) search_max #}
+{% from "_macros.html" import show_tag, post_render %}
+{% if content_type == "preview" and post_list and current_page and max_page %}
+    {% for post in post_list %}
+        <!-- 预览节点 -->
+        {{ post_render(post = post, type = "preview") }}
+    {% endfor %}
+    <!-- 分页 -->
+    <ul class="pagination justify-content-center mx-0 mt-3 mt-sm-5 mb-0">
+        <li class="page-item">
+            {% if current_page > 1 %}
+                <a class="page-link inner_link_mk" href="{{ url_for('router.page', page_num = current_page - 1) }}"><i class="fa fa-chevron-left"></i></a>
+            {% else %}
+                <a class="page-link pointer_disabled" href="javascript:void(0);"><i class="fa fa-chevron-left"></i></a>
+            {% endif %}
+        </li>
+        <li class="page-item {% if current_page == 1 %}pagination_active{% endif %}">
+            <a class="page-link inner_link_mk" href="{{ url_for('router.page', page_num = 1) }}">1</a>
+        </li>
+        {% if current_page > 3 %}
+            <li class="page-item disabled">
+                <a class="page-link pointer_disabled" href="javascript:void(0);"><i class="fa fa-ellipsis-h"></i></a>
+            </li>
+        {% endif %}
+        {% if current_page > 2 %}
+            <li class="page-item">
+                <a class="page-link inner_link_mk" href="{{ url_for('router.page', page_num = current_page - 1) }}">{{ current_page - 1 }}</a>
+            </li>
+        {% endif %}
+        {% if current_page > 1 and current_page < max_page %}
+            <li class="page-item pagination_active">
+                <a class="page-link inner_link_mk" href="{{ url_for('router.page', page_num = current_page) }}">{{ current_page }}</a>
+            </li>
+        {% endif %}
+        {% if max_page - current_page > 1 %}
+            <li class="page-item">
+                <a class="page-link inner_link_mk" href="{{ url_for('router.page', page_num = current_page + 1) }}">{{ current_page + 1 }}</a>
+            </li>
+        {% endif %}
+        {% if max_page - current_page > 2 %}
+            <li class="page-item disabled">
+                <a class="page-link pointer_disabled" href="javascript:void(0);"><i class="fa fa-ellipsis-h"></i></a>
+            </li>
+        {% endif %}
+        {% if max_page > 1 %}
+            <li class="page-item {% if current_page == max_page %}pagination_active{% endif %}">
+                <a class="page-link inner_link_mk" href="{{ url_for('router.page', page_num = max_page) }}">{{ max_page }}</a>
+            </li>
+        {% endif %}
+        <li class="page-item">
+            {% if max_page > current_page %}
+                <a class="page-link inner_link_mk" href="{{ url_for('router.page', page_num = current_page + 1) }}"><i class="fa fa-chevron-right"></i></a>
+            {% else %}
+                <a class="page-link pointer_disabled" href="javascript:void(0);"><i class="fa fa-chevron-right"></i></a>
+            {% endif %}
+        </li>
+    </ul>
+{% elif content_type == "post" and post %}
+    <!-- 文章节点 -->
+    {{ post_render(post = post, type = "post") }}
+{% elif content_type == "search" and search_result and keytype and keyword and search_current and search_max %}
+    {% for post in search_result %}
+        <!-- 搜索节点 -->
+        {{ post_render(post = post, type = "search") }}
+    {% endfor %}
+    <!-- 分页 -->
+    <ul class="pagination justify-content-center mx-0 mt-3 mt-sm-5 mb-0">
+        <li class="page-item">
+            {% if search_current > 1 %}
+                <a class="page-link inner_link_mk" href="{{ url_for('router.search', keytype = keytype, keyword = keyword, page_num = search_current - 1) }}"><i class="fa fa-chevron-left"></i></a>
+            {% else %}
+                <a class="page-link pointer_disabled" href="javascript:void(0);"><i class="fa fa-chevron-left"></i></a>
+            {% endif %}
+        </li>
+        <li class="page-item {% if search_current == 1 %}pagination_active{% endif %}">
+            <a class="page-link inner_link_mk" href="{{ url_for('router.search', keytype = keytype, keyword = keyword, page_num = 1) }}">1</a>
+        </li>
+        {% if search_current > 3 %}
+            <li class="page-item disabled">
+                <a class="page-link pointer_disabled" href="javascript:void(0);"><i class="fa fa-ellipsis-h"></i></a>
+            </li>
+        {% endif %}
+        {% if search_current > 2 %}
+            <li class="page-item">
+                <a class="page-link inner_link_mk" href="{{ url_for('router.search', keytype = keytype, keyword = keyword, page_num = search_current - 1) }}">{{ search_current - 1 }}</a>
+            </li>
+        {% endif %}
+        {% if search_current > 1 and search_current < search_max %}
+            <li class="page-item pagination_active">
+                <a class="page-link inner_link_mk" href="{{ url_for('router.search', keytype = keytype, keyword = keyword, page_num = search_current) }}">{{ search_current }}</a>
+            </li>
+        {% endif %}
+        {% if search_max - search_current > 1 %}
+            <li class="page-item">
+                <a class="page-link inner_link_mk" href="{{ url_for('router.search', keytype = keytype, keyword = keyword, page_num = search_current + 1) }}">{{ search_current + 1 }}</a>
+            </li>
+        {% endif %}
+        {% if search_max - search_current > 2 %}
+            <li class="page-item disabled">
+                <a class="page-link pointer_disabled" href="javascript:void(0);"><i class="fa fa-ellipsis-h"></i></a>
+            </li>
+        {% endif %}
+        {% if search_max > 1 %}
+            <li class="page-item {% if search_current == search_max %}pagination_active{% endif %}">
+                <a class="page-link inner_link_mk" href="{{ url_for('router.search', keytype = keytype, keyword = keyword, page_num = search_max) }}">{{ search_max }}</a>
+            </li>
+        {% endif %}
+        <li class="page-item">
+            {% if search_max > search_current %}
+                <a class="page-link inner_link_mk" href="{{ url_for('router.search', keytype = keytype, keyword = keyword, page_num = search_current + 1) }}"><i class="fa fa-chevron-right"></i></a>
+            {% else %}
+                <a class="page-link pointer_disabled" href="javascript:void(0);"><i class="fa fa-chevron-right"></i></a>
+            {% endif %}
+        </li>
+    </ul>
+{% elif content_type == "about" %}
+    <!-- 关于 -->
+    {{ post_render(post = None, type = "about") }}
+{% else %}
+    <div class="text-secondary">
+        <span>Empty Database - Err:404</span>
+        <br/>
+        <span>没有所寻找的信息</span>
+    </div>
+{% endif %}

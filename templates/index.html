@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <!-- 字符集 -->
+    <meta charset="utf-8"/>
+    <!-- meta元素 -->
+    <meta name="author" content="qyecst,qyecst@qyecst.cn"/>
+    <meta name="description" content="qyecst,qyecst的小站,没名字才是好名字"/>
+    <meta name="keywords" content="qyecst,qyecst的小站,qyecst的网站,没名字才是好名字"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- icon图标 -->
+    <link rel="icon shortcut" type="image/x-icon" href="/static/asset_dir/favicon.ico"/>
+    <!-- region css样式表 -->
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.1.1/css/bootstrap.min.css"/>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <!-- Lightbox (by Lokesh Dhakar) -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/lightbox2/2.10.0/css/lightbox.min.css"/>
+    <!-- Pygments CSS -->
+    <link rel="stylesheet" href="/static/asset_dir/pygments_hightlight_default.css"/>
+    <!-- GitHub Markdown CSS -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/github-markdown-css/2.10.0/github-markdown.min.css"/>
+    <!-- 自定义css -->
+    <link rel="stylesheet" href="/static/asset_dir/index.css"/>
+    <!-- endregion css样式表 -->
+    <!--页面标题-->
+    {{ zone_title|safe }}{# 注意safe过滤器 #}
+</head>
+<body>
+<!-- 导航栏 -->
+<nav class="navbar navbar-expand-sm navbar-light bg-light border-bottom shadow-sm sticky-top px-3 px-sm-4 px-md-5">
+    <!-- 占位div -->
+    <div class="d-none d-md-block px-3 mx-xl-3"></div>
+    <!-- 标题 -->
+    <a id="site_title" class="navbar-brand text-secondary font-weight-bold inner_link_mk" href="{{ url_for('router.index') }}"><img src="/static/asset_dir/qyecst.jpg" class="d-inline-block img-thumbnail align-top navbar_image" alt="导航栏图片"/><span class="ml-1">没名字才是好名字</span></a>
+    <!-- 缩放菜单按钮 -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#top_navbar"><span class="navbar-toggler-icon"></span></button>
+    <!-- 导航项目 -->
+    <div id="top_navbar" class="collapse navbar-collapse">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link text-secondary inner_link_mk" href="{{ url_for('router.index') }}"><i class="fa fa-home fa-fw fa-lg"></i>首页</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-secondary inner_link_mk" href="{{ url_for('router.about') }}"><i class="fa fa-info-circle fa-fw fa-lg"></i>关于</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-secondary" rel="external nofollow noopener noreferrer" target="_blank" href="https://github.com/qyecst"><i class="fa fa-github fa-fw fa-lg"></i>Github</a>
+            </li>
+        </ul>
+    </div>
+    <!-- 搜索栏 -->
+    <form id="search_form" action="{{ url_for('router.search') }}">
+        <div class="d-none d-md-flex input-group input-group-sm top_search">
+            <input name="keytype" type="hidden" class="form-control" value="title"/>
+            <input id="search_text" name="keyword" type="text" class="form-control border" placeholder="输入搜索内容"/>
+            <div class="input-group-append">
+                <button id="search_submit" class="btn btn-light border" type="button"><i class="fa fa-search fa-fw"></i></button>
+            </div>
+        </div>
+    </form>
+    <!-- 占位div -->
+    <div class="d-none d-md-block px-3 mx-xl-3"></div>
+</nav>
+<!-- 页面内容 -->
+<div class="container">
+    <div class="row">
+        <!-- 页面左侧 -->
+        <div class="col-12 col-md-9 p-4 pt-5 py-md-5 px-sm-0">
+            <div id="hitokoto_content" data-hitokoto_url="{{ url_for('router.hitokoto') }}" class="text-secondary hitokoto_div">
+                {{ zone_hitokoto|safe }}{# 注意safe过滤器 #}
+            </div>
+            <!-- 页面左侧主体 -->
+            <div id="main_content">
+                {{ zone_main|safe }}{# 注意safe过滤器 #}
+            </div>
+        </div>
+        <!-- 页面右侧 -->
+        <div class="d-none d-md-block col-md-3 py-4 pt-5 mt-4 py-md-5">
+            <!-- 页面右侧主体 -->
+            <div id="right_content">
+                <!-- TOC -->
+                <div class="toc_box d-none">
+                    <!-- toc标题 -->
+                    <div class="mb-2 mt-0 p-2 bg-light border rounded toc_title">
+                        <!-- 标题 -->
+                        <h6 class="text-center text-secondary m-0">Table of Content</h6>
+                    </div>
+                    <div class="pb-2 px-2 pt-0 text-secondary border rounded">
+                        <!-- 内容 -->
+                        <div id="toc_content" class="small">
+                            {{ zone_toc|safe }}{# 注意safe过滤器 #}
+                        </div>
+                    </div>
+                </div>
+                <!-- 图片轮显 -->
+                <div id="qyecst_show_images"></div>
+                <!-- 贴纸 -->
+                <div class="paper_stickers">
+                    <div class="paper_stickers_circle"></div>
+                    <div class="paper_stickers_inner">
+                        {{ zone_sticker|safe }}{# 注意safe过滤器 #}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 底部信息栏 -->
+<footer class="px-3 py-2 bg-light border-top">
+    <!-- 备案信息 -->
+    <div class="small text-center">
+    </div>
+    <!-- 页面滚动 -->
+    <div class="page_scroll_div">
+        <div class="border rounded py-1 px-2 mb-2 page_up_div"><i class="fa fa-level-up fa-fw"></i></div>
+        <div class="border rounded py-1 px-2 mt-2 page_down_div"><i class="fa fa-level-down fa-fw"></i></div>
+    </div>
+</footer>
+<!-- region javascript脚本 -->
+<!-- jQuery -->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<!-- Popper.js -->
+<script src="https://cdn.bootcss.com/popper.js/1.14.3/umd/popper.min.js"></script>
+<!-- Bootstrap 依赖 Popper.js && jQuery -->
+<script src="https://cdn.bootcss.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<!-- QR Code Generator -->
+<script src="https://cdn.bootcss.com/qrcode-generator/1.4.0/qrcode.min.js"></script>
+<!-- Lightbox2 (by Lokesh Dhakar) -->
+<script src="https://cdn.bootcss.com/lightbox2/2.10.0/js/lightbox.min.js"></script>
+<!-- 自定义js -->
+<script src="/static/asset_dir/index.js"></script>
+{{ zone_scripts|safe }}{# 注意safe过滤器 #}
+<!-- endregion javascript脚本 -->
+</body>
+</html>

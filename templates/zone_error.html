@@ -1,0 +1,26 @@
+{# Integer) err_code, String) err_desc #}
+{% if err_code and err_desc %}
+    {% if err_code == 404 %}
+        <div class="text-secondary">
+            <span>Empty Database - code: 404</span>
+            <br/>
+            <span>{{ err_desc }}</span>
+        </div>
+    {% elif err_code == 500 %}
+        <div class="text-secondary">
+            <span>Server Error - code: 500</span>
+            <br/>
+            <span>{{ err_desc }}</span>
+        </div>
+    {% else %}
+        <div class="text-secondary">
+            <span>Server Error - code: unknown error</span>
+            <br/>
+            <span>{{ err_desc }}</span>
+        </div>
+    {% endif %}
+{% else %}
+    <div class="text-secondary">
+        <span>Server Error - code: unknown error</span>
+    </div>
+{% endif %}

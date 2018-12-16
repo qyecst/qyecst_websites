@@ -1,0 +1,576 @@
+{# List(String)) tag_list #}
+{% macro show_tag(tag_list) %}
+    {% if tag_list %}
+        {% for tag in tag_list %}
+            {% if loop.index0 % 7 == 0 %}
+                <a class="badge badge-pill text-secondary border border-primary inner_link_mk" href="{{ url_for('router.search', keytype = 'tag', keyword = tag.split('(')[0]) }}"><i class="fa fa-tag fa-fw"></i>{{ tag }}</a>
+            {% elif loop.index0 % 7 == 1 %}
+                <a class="badge badge-pill text-secondary border border-secondary inner_link_mk" href="{{ url_for('router.search', keytype = 'tag', keyword = tag.split('(')[0]) }}"><i class="fa fa-tag fa-fw"></i>{{ tag }}</a>
+            {% elif loop.index0 % 7 == 2 %}
+                <a class="badge badge-pill text-secondary border border-success inner_link_mk" href="{{ url_for('router.search', keytype = 'tag', keyword = tag.split('(')[0]) }}"><i class="fa fa-tag fa-fw"></i>{{ tag }}</a>
+            {% elif loop.index0 % 7 == 3 %}
+                <a class="badge badge-pill text-secondary border border-danger inner_link_mk" href="{{ url_for('router.search', keytype = 'tag', keyword = tag.split('(')[0]) }}"><i class="fa fa-tag fa-fw"></i>{{ tag }}</a>
+            {% elif loop.index0 % 7 == 4 %}
+                <a class="badge badge-pill text-secondary border border-warning inner_link_mk" href="{{ url_for('router.search', keytype = 'tag', keyword = tag.split('(')[0]) }}"><i class="fa fa-tag fa-fw"></i>{{ tag }}</a>
+            {% elif loop.index0 % 7 == 5 %}
+                <a class="badge badge-pill text-secondary border border-info inner_link_mk" href="{{ url_for('router.search', keytype = 'tag', keyword = tag.split('(')[0]) }}"><i class="fa fa-tag fa-fw"></i>{{ tag }}</a>
+            {% else %}
+                <a class="badge badge-pill text-secondary border border-dark inner_link_mk" href="{{ url_for('router.search', keytype = 'tag', keyword = tag.split('(')[0]) }}"><i class="fa fa-tag fa-fw"></i>{{ tag }}</a>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <a class="badge badge-pill text-secondary border border-dark pointer_disabled" href="javascript:void(0);"><i class="fa fa-tag fa-fw"></i>暂无</a>
+    {% endif %}
+{% endmacro %}
+
+{# List(String)) category_list #}
+{% macro show_category(category_list) %}
+    {% if category_list %}
+        {% for category in category_list %}
+            {% if loop.index0 % 7 == 0 %}
+                <a class="badge text-secondary border border-primary inner_link_mk" href="{{ url_for('router.search', keytype = 'category', keyword = category.split('(')[0]) }}"><i class="fa fa-bookmark fa-fw"></i>{{ category }}</a>
+            {% elif loop.index0 % 7 == 1 %}
+                <a class="badge text-secondary border border-secondary inner_link_mk" href="{{ url_for('router.search', keytype = 'category', keyword = category.split('(')[0]) }}"><i class="fa fa-bookmark fa-fw"></i>{{ category }}</a>
+            {% elif loop.index0 % 7 == 2 %}
+                <a class="badge text-secondary border border-success inner_link_mk" href="{{ url_for('router.search', keytype = 'category', keyword = category.split('(')[0]) }}"><i class="fa fa-bookmark fa-fw"></i>{{ category }}</a>
+            {% elif loop.index0 % 7 == 3 %}
+                <a class="badge text-secondary border border-danger inner_link_mk" href="{{ url_for('router.search', keytype = 'category', keyword = category.split('(')[0]) }}"><i class="fa fa-bookmark fa-fw"></i>{{ category }}</a>
+            {% elif loop.index0 % 7 == 4 %}
+                <a class="badge text-secondary border border-warning inner_link_mk" href="{{ url_for('router.search', keytype = 'category', keyword = category.split('(')[0]) }}"><i class="fa fa-bookmark fa-fw"></i>{{ category }}</a>
+            {% elif loop.index0 % 7 == 5 %}
+                <a class="badge text-secondary border border-info inner_link_mk" href="{{ url_for('router.search', keytype = 'category', keyword = category.split('(')[0]) }}"><i class="fa fa-bookmark fa-fw"></i>{{ category }}</a>
+            {% else %}
+                <a class="badge text-secondary border border-dark inner_link_mk" href="{{ url_for('router.search', keytype = 'category', keyword = category.split('(')[0]) }}"><i class="fa fa-bookmark fa-fw"></i>{{ category }}</a>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <a class="badge text-secondary border border-dark pointer_disabled" href="javascript:void(0);"><i class="fa fa-bookmark fa-fw"></i>暂无</a>
+    {% endif %}
+{% endmacro %}
+
+{# 第三方评论系统 #}
+{% macro thrid_part_comment_system() %}
+    <!-- 来必力City版(第三方评论系统) -->
+    <div class="card text-secondary mt-3 mt-sm-5">
+        <div class="card-body p-0 px-3">
+            <!-- region 来必力City版安装代码 -->
+            <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjc0Mi8xMzI3Nw==">
+                <script type="text/javascript">
+                    (function (d, s) {
+                        let j, e = d.getElementsByTagName(s)[0];
+
+                        if (typeof LivereTower === 'function') {
+                            return;
+                        }
+
+                        j = d.createElement(s);
+                        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                        j.async = true;
+
+                        e.parentNode.insertBefore(j, e);
+                    })(document, 'script');
+                </script>
+                <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+            </div>
+            <!-- endregion City版安装代码已完成 -->
+        </div>
+    </div>
+{% endmacro %}
+
+{# Post) post, String) type #}
+{% macro post_render(post,type) %}
+    {% if type in ["preview", "post", "search"] %}
+        <article class="card text-secondary post_node {% if type != "post" %}card_stack{% endif %}">
+            <div class="card-body">
+                <!-- 标题 -->
+                <h3 class="mt-sm-3 title_link_outer">
+                    <a class="text-secondary title_link title_link_font_size inner_link_mk {% if type == "post" %}pointer_disabled{% endif %}" href="{{ url_for('router.post', filename = post.filename) }}">{{ post.title }}</a>
+                </h3>
+                <!-- 分隔线 -->
+                <hr class="my-0"/>
+                <!-- 信息 -->
+                <div class="mt-1 mt-sm-2 d-flex flex-wrap justify-content-center text-secondary small">
+                    <div class="mx-1">
+                        <i class="fa fa-pencil fa-fw"></i><span class="d-none d-sm-inline">编写于：</span><span>{{ post.create }}</span>
+                    </div>
+                    {% if type == "post" %}
+                    <div class="mx-1">
+                        <i class="fa fa-pencil-square-o fa-fw"></i><span class="d-none d-sm-inline">修改于：</span><span>{{ post.modify }}</span>
+                    </div>
+                    {% endif %}
+                    <!--归类信息-->
+                    <div class="mx-1 ">
+                        <i class="fa fa-qrcode fa-fw"></i><span class="d-none d-sm-inline">二维码：</span><a class="qrcode_link" data-qrcode_data="{{ url_for('router.post', filename = post.filename, _external = True) }}" href="javascript:void(0);" download="{{ post.title }}-没名字才是好名字QR_code">QR code</a>
+                        <div class="border rounded qrcode_div">QR code image</div>
+                    </div>
+                </div>
+                {% if type != "post" %}
+                <!-- 回形针纸片 -->
+                <div class="paper_clip_all_div">
+                    <!-- 回形针 -->
+                    <div class="paper_clip_outer">
+                        <div class="start_paper_clip"></div>
+                        <div class="middle_paper_clip">
+                            <div class="middle_paper_clip_a"></div>
+                            <div class="middle_paper_clip_b"></div>
+                            <div class="middle_paper_clip_c"></div>
+                        </div>
+                        <div class="end_paper_clip"></div>
+                    </div>
+                    <!-- 贴纸内容 -->
+                    <div class="paper_clip_content">
+                        <!-- 标签信息 -->
+                        <!-- 其他信息 -->
+                        <div class="text-secondary">
+                            <!-- 浏览数 -->
+                            <div class="small">
+                                <i class="fa fa-thermometer-full fa-fw"></i><span class="d-none d-sm-inline">浏览数：</span><span>未实现 <sub><del class="small">没错,就是懒!</del></sub></span>
+                            </div>
+                            <!-- 修改时间 -->
+                            <div class="small">
+                                <i class="fa fa-pencil-square-o fa-fw"></i><span class="d-none d-sm-inline">修改于：</span><span>{{ post.modify }}</span>
+                            </div>
+                        </div>
+                        <!-- 分隔线 -->
+                        <hr class="my-2"/>
+                        <!-- 附加信息 -->
+                        <div class="text-secondary">
+                            <div class="small">
+                                {% if post.info_list %}
+                                    {% for info in post.info_list %}
+                                        <span><i class="fa fa-file-text-o fa-fw"></i>{{ info }}</span><br/>
+                                    {% endfor %}
+                                {% else %}
+                                    <span><i class="fa fa-times-circle-o fa-fw"></i>暂无其它信息</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                <!-- 内容 -->
+                <div class="my-4 markdown-body">
+                    {% if type == "post" %}
+                        {{ post.content|safe }}{# 注意safe过滤器 #}
+                    {% else %}
+                        {{ post.preview|safe }}{# 注意safe过滤器 #}
+                    {% endif %}
+                </div>
+                {% if type == "post" %}
+                    <!-- 附加信息 -->
+                    <div class="m-3 border px-3 py-2 text-secondary small rounded">
+                        <span><strong>本文标题：</strong>{{ post.title }}</span>
+                        <br/>
+                        <span><strong>本文链接：</strong>{{ url_for('router.post', filename = post.filename, _external = True) }}</span>
+                        <br/>
+                        <span><strong>本文注释：</strong>除特别说明外，皆使用<i class="fa fa-quote-left fa-fw"></i><a rel="external nofollow noopener noreferrer" target="_blank" href="https://creativecommons.org/publicdomain/zero/1.0/deed.zh"><span>CC0 1.0 通用 (CC0 1.0)</span></a><i class="fa fa-quote-right fa-fw"></i>协议</span>
+                    </div>
+                    <!-- 分隔线 -->
+                    <hr class="my-0"/>
+                    <!--上下文章链接-->
+                    <div class="my-2 text-secondary next_previous_outer_div">
+                        <div class="previous_div">
+                            {% if post.prev_post %}
+                                <i class="fa fa-arrow-left fa-fw"></i><a class="previous_link inner_link_mk" href="{{ url_for('router.post', filename = post.prev_post.filename) }}">{{ post.prev_post.title }}</a>
+                            {% else %}
+                                <i class="fa fa-arrow-left fa-fw"></i><a class="previous_link pointer_disabled" href="javascript:void(0);">暂无上一篇文章</a>
+                            {% endif %}
+                        </div>
+                        <div class="next_div">
+                            {% if post.next_post %}
+                                <a class="next_link inner_link_mk" href="{{ url_for('router.post', filename = post.next_post.filename) }}">{{ post.next_post.title }}</a><i class="fa fa-arrow-right fa-fw"></i>
+                            {% else %}
+                                <a class="next_link pointer_disabled" href="javascript:void(0);">暂无下一篇文章</a><i class="fa fa-arrow-right fa-fw"></i>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% else %}
+                    <!-- 阅读连接 -->
+                    <div class="my-4 text-center">
+                        <a class="read_link post_link_mk" href="{{ url_for('router.post', filename = post.filename) }}"><i class="fa fa-hand-o-right fa-fw"></i>继续阅读</a>
+                    </div>
+                {% endif %}
+            </div>
+        </article>
+        {% if type == "post" %}
+            {{ thrid_part_comment_system() }}
+        {% endif %}
+    {% elif type == "about" %}
+        <article class="card text-secondary post_node">
+            <div class="card-body">
+                <!-- 标题 -->
+                <h3 class="mt-sm-3 title_link_outer">
+                    <a class="text-secondary title_link title_link_font_size pointer_disabled" href="javascript:void(0);">关于</a>
+                </h3>
+                <!-- 分隔线 -->
+                <hr class="my-0"/>
+                <!-- 信息 -->
+                <div class="mt-1 mt-sm-2 d-flex flex-wrap justify-content-center text-secondary small">
+                    <div class="mx-1">
+                        <i class="fa fa-pencil fa-fw"></i><span class="d-none d-sm-inline">编写于：</span><span>2018-05-16 15:02:26</span>
+                    </div>
+                    <div class="mx-1">
+                        <i class="fa fa-pencil-square-o fa-fw"></i><span class="d-none d-sm-inline">修改于：</span><span>2018-12-16 14:40:56</span>
+                    </div>
+                    <!--归类信息-->
+                    <div class="mx-1 ">
+                        <i class="fa fa-qrcode fa-fw"></i><span class="d-none d-sm-inline">二维码：</span><a class="qrcode_link" data-qrcode_data="{{ url_for('router.about', _external = True) }}" href="javascript:void(0);" download="关于-没名字才是好名字QR_code">QR code</a>
+                        <div class="border rounded qrcode_div">QR code image</div>
+                    </div>
+                </div>
+                <!-- 内容 -->
+                <div class="my-4">
+                    <!-- 关于我 -->
+                    <div class="text-secondary mb-3">
+                        <h5 class="text-secondary"><i class="fa fa-info-circle fa-fw"></i>我</h5>
+                        <!-- id信息 -->
+                        <div class="ml-3">
+                            <div>
+                                <span class="small">常用</span><span class="font-weight-bold">ID：</span>
+                            </div>
+                            <div class="ml-3">
+                                <span>没名字才是好名字 <sub><del class="small">皮这么一下很开心</del></sub></span>
+                                <br/>
+                                <span>qyecst <sub><del class="small">只是习惯了，没有啥意义</del></sub></span>
+                            </div>
+                        </div>
+                        <!-- 个人信息 -->
+                        <div class="ml-3">
+                            <div>
+                                <span class="small">个人</span><span class="font-weight-bold">信息：</span>
+                            </div>
+                            <div class="ml-3">
+                                <span>喜欢听音乐 <sub><del class="small">但是不会唱</del></sub></span>
+                                <br/>
+                                <span>喜欢3C产品 <sub><del class="small">也喜欢拆着玩</del> <sub><del class="small">但是买不起</del></sub></sub></span>
+                                <br/>
+                                <span>喜欢编程 <sub><del class="small">面向对象编程</del> <sub><del class="small">Object not found</del></sub></sub></span>
+                                <br/>
+                                <span>喜欢命令行 <sub><del class="small">Command not found</del> <sub><del class="small">Kernel crash</del></sub></sub></span>
+                                <br/>
+                                <span>喜欢各种技术 <sub><del class="small">Deprecated</del> <sub><del class="small">No longer supported</del> <sub><del class="small">Page not found</del></sub></sub></sub></span>
+                                <br/>
+                                <span>喜欢计算机 <sub><del class="small">You PC ran into a problem</del> <sub><del class="small">A problem has been detected</del> <sub><del class="small">wtf?!</del></sub></sub></sub></span>
+                                <br/>
+                                <span>喜欢玩游戏 <sub><del class="small">ACT/AVG/SLG/SIM/RPG...等类型都有玩</del> <sub><del class="small">FPS一般</del> <sub><del class="small">毕竟手残</del> <sub><del class="small">老年人</del></sub></sub></sub></sub></span>
+                                <br/>
+                                <span>喜欢ACGN <sub><del class="small">萌即正义</del> <sub><del class="small">教练,我要学画画</del> <sub><del class="small">教练:你TM什么都想学</del> <sub><del class="small">四斋蒸鹅心</del> <sub><del class="small">笑什么笑,你也是</del> <sub><del class="small">我不是,我没有</del> <sub><del class="small">真香.jpg</del></sub></sub></sub></sub></sub></sub></sub></span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 关于网站 -->
+                    <div class="text-secondary">
+                        <h5 class="text-secondary"><i class="fa fa-info-circle fa-fw"></i>本站</h5>
+                        <!-- 信息 -->
+                        <div class="ml-3">
+                            <div>
+                                <span class="small">基本</span><span class="font-weight-bold">信息：</span>
+                            </div>
+                            <div class="ml-3">
+                                <span>主要用来记点笔记 <sub><del class="small">也没啥记的</del> <sub><del class="small">以前的基本没了</del> <sub><del class="small">就是懒</del></sub></sub></sub></span>
+                                <br/>
+                                <span class="small">页面使用 <a rel="external nofollow noopener noreferrer" target="_blank" href="https://getbootstrap.com/">Bootstrap</a>/<a rel="external nofollow noopener noreferrer" target="_blank" href="https://jquery.com/">jQuery</a>/<a rel="external nofollow noopener noreferrer" target="_blank" href="https://popper.js.org">Popper.js</a>/<a rel="external nofollow noopener noreferrer" target="_blank" href="https://fontawesome.com/">Font Awesome</a>/<a rel="external nofollow noopener noreferrer" target="_blank" href="https://github.com/kazuhikoarase/qrcode-generator/tree/master/js">QR Code Generator</a> 使用<a rel="external nofollow noopener noreferrer" target="_blank" href="http://www.bootcdn.cn/">BootCDN</a> 后端使用 <a rel="external nofollow noopener noreferrer" target="_blank" href="https://www.python.org/">Python</a>/<a rel="external nofollow noopener noreferrer" target="_blank" href="http://flask.pocoo.org/">Flask</a></span>
+                                <br/>
+                                <span class="small">评论使用 <a rel="external nofollow noopener noreferrer" target="_blank" href="https://livere.com/">来必力</a> 第三方评论系统<sub><del class="small">毕竟没广告.jpg</del></sub></span>
+                            </div>
+                        </div>
+                        <!-- 变更日志 -->
+                        <div>
+                            <div class="ml-3">
+                                <span class="small">变更</span><span class="font-weight-bold">日志：</span>
+                            </div>
+                            <!-- 时间线 -->
+                            <ul id="qyecst_about_time_line" class="time_line">
+                                <!-- 时间线头部 -->
+                                <li class="time_line_item">
+                                    <div class="time_line_dot_line">
+                                        <!-- 导向线 -->
+                                        <div class="time_line_line"></div>
+                                    </div>
+                                    <!-- 头部时钟 -->
+                                    <div class="spin_clock">
+                                        <div class="clock_top_mark"></div>
+                                        <div class="clock_right_mark"></div>
+                                        <div class="clock_bottom_mark"></div>
+                                        <div class="clock_left_mark"></div>
+                                        <div class="clock_center_mark"></div>
+                                        <div class="clock_seconds"></div>
+                                        <div class="clock_minutes"></div>
+                                        <div class="clock_hours"></div>
+                                        <!-- 标题 -->
+                                        <!--<div class="time_line_title">{{ 1|get_time_str }}</div>-->
+                                    </div>
+                                </li>
+                                <!-- 时间线项目... -->
+                                <li class="time_line_item">
+                                    <div class="time_line_dot_line">
+                                        <!-- 三角图标 -->
+                                        <div class="time_line_dot"></div>
+                                        <!-- 导向线 -->
+                                        <div class="time_line_line"></div>
+                                    </div>
+                                    <!-- 内容 -->
+                                    <div class="time_line_content">
+                                        <h6 class="time_line_content_head">2018-07-03</h6>
+                                        <div>
+                                            <p>页面修改</p>
+                                            <p>
+                                                <del>版...版本4.1</del>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="time_line_item">
+                                    <div class="time_line_dot_line">
+                                        <!-- 三角图标 -->
+                                        <div class="time_line_dot"></div>
+                                        <!-- 导向线 -->
+                                        <div class="time_line_line"></div>
+                                    </div>
+                                    <!-- 内容 -->
+                                    <div class="time_line_content">
+                                        <h6 class="time_line_content_head">2018-07-03</h6>
+                                        <div>
+                                            <p>页面修改，改用Bootstrap ，将md格式内容渲染由客户端渲染改为服务端渲染</p>
+                                            <p>页面使用 Bootstrap / jQuery / Popper.js / Font Awesome / QR Code Generator 使用BootCDN 后端使用 Python / Flask</p>
+                                            <p>
+                                                <del>版...版本4.0</del>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="time_line_item">
+                                    <div class="time_line_dot_line">
+                                        <!-- 三角图标 -->
+                                        <div class="time_line_dot"></div>
+                                        <!-- 导向线 -->
+                                        <div class="time_line_line"></div>
+                                    </div>
+                                    <!-- 内容 -->
+                                    <div class="time_line_content">
+                                        <h6 class="time_line_content_head">2018-06-11</h6>
+                                        <div>
+                                            <p>页面自己写，不用数据库了，直接从markdown文件读取内容，浏览器渲染md格式内容</p>
+                                            <p>
+                                                <del>不用操作数据库，又可以偷懒了</del>
+                                            </p>
+                                            <p>
+                                                <del>版...版本3.0</del>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="time_line_item">
+                                    <div class="time_line_dot_line">
+                                        <!-- 三角图标 -->
+                                        <div class="time_line_dot"></div>
+                                        <!-- 导向线 -->
+                                        <div class="time_line_line"></div>
+                                    </div>
+                                    <!-- 内容 -->
+                                    <div class="time_line_content">
+                                        <h6 class="time_line_content_head">2018-04-27</h6>
+                                        <div>
+                                            <p>页面改用 Layui ，数据库改用 MongoDB</p>
+                                            <p>
+                                                <del>数据又双叒叕没了</del>
+                                            </p>
+                                            <p>
+                                                <del>版...版本2.0</del>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="time_line_item">
+                                    <div class="time_line_dot_line">
+                                        <!-- 三角图标 -->
+                                        <div class="time_line_dot"></div>
+                                        <!-- 导向线 -->
+                                        <div class="time_line_line"></div>
+                                    </div>
+                                    <!-- 内容 -->
+                                    <div class="time_line_content">
+                                        <h6 class="time_line_content_head">2018-03-21</h6>
+                                        <div>
+                                            <p>变更备案过了，域名改为 qyecst.cn</p>
+                                            <p>
+                                                <del>为啥改域名？我也不知道</del>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="time_line_item">
+                                    <div class="time_line_dot_line">
+                                        <!-- 三角图标 -->
+                                        <div class="time_line_dot"></div>
+                                        <!-- 导向线 -->
+                                        <div class="time_line_line"></div>
+                                    </div>
+                                    <!-- 内容 -->
+                                    <div class="time_line_content">
+                                        <h6 class="time_line_content_head">2018-04-06</h6>
+                                        <p>网站改来改去终于写完了 <br>使用 Python + Flask + MariaDB & MongoDB + Redis + Bootstrap 搭建<br>使用 Nginx + Python venv + uwsgi 处理访问请求<br/>使用 Docker 容器运行实例</p>
+                                        <p>
+                                            <del>版...版本1.0</del>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="time_line_item">
+                                    <div class="time_line_dot_line">
+                                        <!-- 三角图标 -->
+                                        <div class="time_line_dot"></div>
+                                        <!-- 导向线 -->
+                                        <div class="time_line_line"></div>
+                                    </div>
+                                    <!-- 内容 -->
+                                    <div class="time_line_content">
+                                        <h6 class="time_line_content_head">2018-02-11</h6>
+                                        <p>改为微服务方式失败了。改后代码量大，开发还麻烦</p>
+                                        <p>
+                                            <del>不是因为懒（就算是因为我懒，你觉得我会说出来吗）</del>
+                                        </p>
+                                        <p>
+                                            <del>反复无常 x3</del>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="time_line_item">
+                                    <div class="time_line_dot_line">
+                                        <!-- 三角图标 -->
+                                        <div class="time_line_dot"></div>
+                                        <!-- 导向线 -->
+                                        <div class="time_line_line"></div>
+                                    </div>
+                                    <!-- 内容 -->
+                                    <div class="time_line_content">
+                                        <h6 class="time_line_content_head">2017-11-28</h6>
+                                        <p>备案完成，启用 qyecst.top 访问</p>
+                                        <p>
+                                            <del>我又双叒叕回来了</del>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="time_line_item">
+                                    <div class="time_line_dot_line">
+                                        <!-- 三角图标 -->
+                                        <div class="time_line_dot"></div>
+                                        <!-- 导向线 -->
+                                        <div class="time_line_line"></div>
+                                    </div>
+                                    <!-- 内容 -->
+                                    <div class="time_line_content">
+                                        <h6 class="time_line_content_head">2017-11-18</h6>
+                                        <p>云服务器又双叒叕空闲了好久，再次开始备案</p>
+                                        <p>
+                                            <del>反复无常 x2</del>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="time_line_item">
+                                    <div class="time_line_dot_line">
+                                        <!-- 三角图标 -->
+                                        <div class="time_line_dot"></div>
+                                        <!-- 导向线 -->
+                                        <div class="time_line_line"></div>
+                                    </div>
+                                    <!-- 内容 -->
+                                    <div class="time_line_content">
+                                        <h6 class="time_line_content_head">2017-9-24</h6>
+                                        <p>偶然发现云服务器活动打折了，又租了一年</p>
+                                        <p>
+                                            <del>反复无常</del>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="time_line_item">
+                                    <div class="time_line_dot_line">
+                                        <!-- 三角图标 -->
+                                        <div class="time_line_dot"></div>
+                                        <!-- 导向线 -->
+                                        <div class="time_line_line"></div>
+                                    </div>
+                                    <!-- 内容 -->
+                                    <div class="time_line_content">
+                                        <h6 class="time_line_content_head">2017-06-13</h6>
+                                        <p>服务器要到期了，注销备案，关闭 qyecst.top 访问</p>
+                                        <p>
+                                            <del>关站了 hhhhhh</del>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="time_line_item">
+                                    <div class="time_line_dot_line">
+                                        <!-- 三角图标 -->
+                                        <div class="time_line_dot"></div>
+                                        <!-- 导向线 -->
+                                        <div class="time_line_line"></div>
+                                    </div>
+                                    <!-- 内容 -->
+                                    <div class="time_line_content">
+                                        <h6 class="time_line_content_head">2016-12-08</h6>
+                                        <p>云服务器是国内节点，备案完成，启用 qyecst.top 访问</p>
+                                    </div>
+                                </li>
+                                <li class="time_line_item">
+                                    <div class="time_line_dot_line">
+                                        <!-- 三角图标 -->
+                                        <div class="time_line_dot"></div>
+                                        <!-- 导向线 -->
+                                        <div class="time_line_line"></div>
+                                    </div>
+                                    <!-- 内容 -->
+                                    <div class="time_line_content">
+                                        <h6 class="time_line_content_head">2016-11-27</h6>
+                                        <p>租的云服务器闲了好久，想着不能空着就买了个域名 qyecst.top</p>
+                                    </div>
+                                </li>
+                                <!-- 时间线尾部 -->
+                                <li class="time_line_item">
+                                    <div class="time_line_dot_line">
+                                        <!-- 三角图标 -->
+                                        <div class="time_line_dot"></div>
+                                        <!-- 导向线 -->
+                                        <div class="time_line_line"></div>
+                                    </div>
+                                    <!-- 尾部图标 -->
+                                    <div class="position_icon_outer">
+                                        <div class="position_icon"></div>
+                                        <div class="ani_circle"></div>
+                                        <!-- 标题 -->
+                                        <div class="time_line_footer">2016-11-27</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- 附加信息 -->
+                <div class="m-3 border px-3 py-2 text-secondary small rounded">
+                    <span><strong>本文标题：</strong>关于</span>
+                    <br/>
+                    <span><strong>本文链接：</strong>{{ url_for('router.about', _external = True) }}</span>
+                    <br/>
+                    <span><strong>本文注释：</strong>除特别说明外，皆使用<i class="fa fa-quote-left fa-fw"></i><a rel="external nofollow noopener noreferrer" target="_blank" href="https://creativecommons.org/publicdomain/zero/1.0/deed.zh"><span>CC0 1.0 通用 (CC0 1.0)</span></a><i class="fa fa-quote-right fa-fw"></i>协议</span>
+                </div>
+                <!-- 分隔线 -->
+                <hr class="my-0"/>
+                <!--上下文章链接-->
+                <div class="my-2 text-secondary next_previous_outer_div">
+                    <div class="previous_div">
+                        <i class="fa fa-arrow-left fa-fw"></i><a class="previous_link inner_link_mk" href="{{ url_for('router.index') }}">返回首页</a>
+                    </div>
+                    <div class="next_div">
+                        <a class="next_link pointer_disabled" href="javascript:void(0);">暂无下一篇</a><i class="fa fa-arrow-right fa-fw"></i>
+                    </div>
+                </div>
+            </div>
+        </article>
+        {{ thrid_part_comment_system() }}
+    {% else %}
+        <div class="text-secondary">
+            <span>Empty Database - Err:404</span>
+            <br/>
+            <span>没有所寻找的信息</span>
+        </div>
+    {% endif %}
+{% endmacro %}

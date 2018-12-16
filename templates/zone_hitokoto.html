@@ -1,0 +1,6 @@
+{# JSON-obj) hitokoto #}
+{% if hitokoto %}
+    <span data-toggle="tooltip" data-placement="bottom" data-html="true" class="font-weight-bold small" title="<span class='small'>来自：{{ hitokoto.get('where') }}<br/>收集：{{ hitokoto.get('create') }}</span>"><i class="fa fa-quote-left fa-fw"></i><span>{{ hitokoto.get('hitokoto') }}</span></span>
+{% else %}
+    <span data-toggle="tooltip" data-placement="bottom" data-html="true" class="font-weight-bold small" title="<span class='small'>来自：Github - github.com/thankyou-opensource/thankyou-open-source<br/>收集：2018-03-28 15:28:49</span>"><i class="fa fa-quote-left fa-fw"></i><span>Programming isn't the most important thing. Love is.</span></span>
+{% endif %}

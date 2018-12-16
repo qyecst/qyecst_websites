@@ -1,0 +1,1565 @@
+/* region -------- html元素 -------- */
+
+/* 页面背景 */
+body {
+    background-color: #efefef;
+}
+
+/* 链接样式 */
+a, a:link, a:visited, a:hover, a:after {
+    text-decoration: none;
+}
+
+/* endregion -------- html元素 -------- */
+
+/* region -------- 页面样式 -------- */
+
+/* 禁用pointer-events */
+.pointer_disabled {
+    pointer-events: none;
+}
+
+/* 导航栏图片 */
+.navbar_image {
+    width: 1.875rem;
+    height: 1.875rem;
+}
+
+/* 导航栏搜索栏 */
+.top_search {
+    width: 100%;
+    max-width: 12.5rem;
+}
+
+/* 顶部一言 */
+.hitokoto_div {
+    position: relative;
+    top: -1.5rem;
+}
+
+/* 文章节点 */
+.post_node {
+    min-height: 20rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    box-shadow: 0.0625rem 0.125rem 0.3125rem 0 rgba(0, 0, 0, 0.1);
+}
+
+/* 文章节点media */
+@media (max-width: 576px) {
+    .post_node {
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+}
+
+/* 文章节点first-of-type，注意type为article */
+#main_content .post_node:first-of-type {
+    margin-top: 0;
+}
+
+/* 文章节点last-of-type，注意type为article */
+#main_content .post_node:last-of-type {
+    margin-bottom: 0;
+}
+
+/* 标题大小 */
+@media (max-width: 576px) {
+    .title_link_font_size {
+        font-size: 65%;
+    }
+}
+
+/* 文章二维码 */
+.qrcode_link {
+    color: #28a745;
+}
+
+/* 文章二维码hover */
+.qrcode_link:hover {
+    color: #186529;
+}
+
+/* 文章二维码hover下二维码图片 */
+.qrcode_link:hover + .qrcode_div {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* 二维码图片 */
+.qrcode_div {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    transition: all 0.5s;
+    z-index: 2;
+}
+
+/* 自定当前分页样式 */
+.pagination_active .page-link {
+    color: #292d30;
+    background-color: #c7dbff;
+    border-color: #c7dbff;
+    pointer-events: none;
+}
+
+/* 右侧主体*/
+#right_content {
+    height: 100%;
+}
+
+/* 右侧toc */
+.right_toc_list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 80%;
+}
+
+/* 右侧toc */
+.right_toc_list li a {
+    display: inline-block;
+    border-bottom: 0.0625rem dashed rgba(0, 0, 0, 0.3);
+}
+
+/* 右侧toc */
+.right_toc_list .right_toc_list {
+    padding: 0 0 0 1rem;
+}
+
+/* 加载图片 */
+.load_image {
+    color: blue;
+    cursor: pointer;
+}
+
+/* toc样式 */
+.toc_box {
+    position: fixed;
+    top: 4rem;
+    max-width: 16rem;
+    max-height: 70%;
+    overflow: auto;
+    background-color: #ffffff;
+    border: 0.3125rem solid #fff;
+    border-radius: 0.375rem;
+    box-shadow: 0.125rem 0.125rem 0.3125rem 0 rgba(0, 0, 0, .2);
+    z-index: 1;
+}
+
+/* toc标题 */
+.toc_title {
+    position: sticky;
+    top: 0;
+}
+
+/* 页面滚动div */
+.page_scroll_div {
+    position: fixed;
+    bottom: 1rem;
+    left: 1rem;
+    z-index: 2048;
+}
+
+/* 页面滚动div */
+.page_up_div {
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* 页面滚动div */
+.page_down_div {
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* endregion -------- 页面样式 -------- */
+
+/* region ======== 标题链接-复用 ======== */
+
+/**
+<h3 class="title_link_outer">
+    <a class="title_link" href="#">标题</a>
+</h3>
+*/
+
+/* 标题链接外部 */
+.title_link_outer {
+    display: flex;
+    justify-content: center;
+}
+
+/* 标题链接 */
+.title_link {
+    display: block;
+    position: relative;
+    padding: 0.125rem;
+    transition: all 0.5s;
+    /* 过长省略文字 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 标题链接hover */
+.title_link:hover {
+    color: #666666;
+}
+
+/* 标题链接before */
+.title_link:before {
+    position: absolute;
+    right: 50%;
+    bottom: 0;
+    content: "";
+    height: 0.125rem;
+    width: 0;
+    background-color: #6c757d;
+    transition: all 0.5s;
+}
+
+/* 标题链接hover后的before */
+.title_link:hover:before {
+    width: 50%;
+}
+
+/* 标题链接after */
+.title_link:after {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    content: "";
+    height: 0.125rem;
+    width: 0;
+    background-color: #6c757d;
+    transition: all 0.5s;
+}
+
+/* 标题链接hover后的after */
+.title_link:hover:after {
+    width: 50%;
+}
+
+/* endregion ======== 标题链接-复用 ======== */
+
+/* region ======== 回形针纸片-复用 ======== */
+
+/**
+<div class="paper_clip_all_div">
+    <!-- 回形针 -->
+    <div class="paper_clip_outer">
+        <div class="start_paper_clip"></div>
+        <div class="middle_paper_clip">
+            <div class="middle_paper_clip_a"></div>
+            <div class="middle_paper_clip_b"></div>
+            <div class="middle_paper_clip_c"></div>
+        </div>
+        <div class="end_paper_clip"></div>
+    </div>
+    <!-- 贴纸内容 -->
+    <div class="paper_clip_content">
+        content
+    </div>
+</div>
+ */
+
+/* 回形针+纸片div */
+.paper_clip_all_div {
+    position: relative;
+    left: -0.3125rem;
+    top: 0;
+    margin-bottom: 1.5rem;
+    z-index: 2;
+}
+
+/* 回形针外部 */
+.paper_clip_outer {
+    display: inline-block;
+    position: relative;
+    top: 0;
+    left: -2.875rem;
+    width: 6.25rem;
+    height: 1.875rem;
+    transform: rotate(12deg);
+    z-index: 1;
+}
+
+/* 回形针针头 */
+.start_paper_clip {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0.9375rem;
+    height: 1.875rem;
+    background: radial-gradient(circle, rgba(100, 100, 100, 0) 0.6875rem, #6c757d 0.75rem, #6c757d 0.875rem, rgba(100, 100, 100, 0) 0.9375rem) 0 0 no-repeat;
+    background-size: 1.875rem 1.875rem;
+}
+
+/* 回形针针头中间白线 */
+.start_paper_clip:before {
+    display: inline-block;
+    position: absolute;
+    content: "";
+    width: 0.9375rem;
+    height: 1.875rem;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0) 0.75rem, rgba(255, 255, 255, 0.5) 0.8125rem, rgba(255, 255, 255, 0) 0.875rem) 0 0 no-repeat;
+    background-size: 1.875rem 1.875rem;
+}
+
+/* 回形针针中外div */
+.middle_paper_clip {
+    position: absolute;
+    left: 0.9375rem;
+    top: 0;
+    width: 4.375rem;
+    height: 1.875rem;
+}
+
+/* 回形针针中 */
+.middle_paper_clip_a {
+    position: absolute;
+    width: 0.625rem;
+    height: 1.875rem;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0) 0rem, #6c757d 0.0625rem, #6c757d 0.1875rem, rgba(255, 255, 255, 0) 0.25rem, rgba(255, 255, 255, 0) 1.625rem, #6c757d 1.6875rem, #6c757d 1.8125rem, rgba(255, 255, 255, 0) 1.875rem);
+}
+
+/* 回形针针中中间白线 */
+.middle_paper_clip_a:before {
+    display: inline-block;
+    position: absolute;
+    content: "";
+    width: 0.625rem;
+    height: 1.875rem;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0) 0.0625rem, rgba(255, 255, 255, 0.6) 0.125rem, rgba(255, 255, 255, 0) 0.1875rem, rgba(255, 255, 255, 0) 1.6875rem, rgba(255, 255, 255, 0.6) 1.75rem, rgba(255, 255, 255, 0) 1.8125rem);
+}
+
+/* 回形针针中 */
+.middle_paper_clip_b {
+    position: absolute;
+    left: 0.625rem;
+    width: 1.25rem;
+    height: 1.875rem;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0) 0rem, #6c757d 0.0625rem, #6c757d 0.1875rem, rgba(255, 255, 255, 0) 0.25rem);
+}
+
+/* 回形针针中中间白线 */
+.middle_paper_clip_b:before {
+    display: inline-block;
+    position: absolute;
+    content: "";
+    width: 1.25rem;
+    height: 1.875rem;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0) 0.0625rem, rgba(255, 255, 255, 0.6) 0.125rem, rgba(255, 255, 255, 0) 0.1875rem);
+}
+
+/* 回形针针中 */
+.middle_paper_clip_c {
+    position: absolute;
+    left: 1.875rem;
+    width: 2.5rem;
+    height: 1.875rem;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0) 0rem, #6c757d 0.0625rem, #6c757d 0.1875rem, rgba(255, 255, 255, 0) 0.25rem, rgba(255, 255, 255, 0) 1.375rem, #6c757d 1.4375rem, #6c757d 1.5625rem, rgba(255, 255, 255, 0) 1.625rem);
+}
+
+/* 回形针针中中间白线 */
+.middle_paper_clip_c:before {
+    display: inline-block;
+    position: absolute;
+    content: "";
+    width: 2.5rem;
+    height: 1.875rem;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0) 0.0625rem, rgba(255, 255, 255, 0.6) 0.125rem, rgba(255, 255, 255, 0) 0.1875rem, rgba(255, 255, 255, 0) 1.4375rem, rgba(255, 255, 255, 0.6) 1.5rem, rgba(255, 255, 255, 0) 1.5625rem);
+}
+
+/* 回形针针尾 */
+.end_paper_clip {
+    position: absolute;
+    left: 5.3125rem;
+    top: 0;
+    width: 0.9375rem;
+    height: 1.875rem;
+    background: radial-gradient(circle, rgba(100, 100, 100, 0) 0.5625rem, #6c757d 0.625rem, #6c757d 0.75rem, rgba(100, 100, 100, 0) 0.8125rem) -0.9375rem 0.125rem no-repeat;
+    background-size: 1.875rem 1.875rem;
+}
+
+/* 回形针针尾中间白线 */
+.end_paper_clip:before {
+    display: inline-block;
+    position: absolute;
+    content: "";
+    width: 0.9375rem;
+    height: 1.875rem;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0) 0.625rem, rgba(255, 255, 255, 0.5) 0.6875rem, rgba(255, 255, 255, 0) 0.75rem) -0.9375rem 0.125rem no-repeat;
+    background-size: 1.875rem 1.875rem;
+}
+
+/* 回形针纸片 */
+.paper_clip_content {
+    position: absolute;
+    left: 0;
+    top: -0.25rem;
+    min-height: 3.6rem;
+    max-height: 16.2rem;
+    width: 100%;
+    /*max-width: 16rem;*/
+    max-width: 16rem;
+    overflow: hidden;
+    padding: 0.5rem 0.75rem;
+    border: 0.0625rem solid #dedede;
+    border-radius: 0.625rem;
+    transform: rotate(4deg);
+    background-color: white;
+    box-shadow: 0.125rem 0.125rem 0.3125rem 0 rgba(0, 0, 0, 0.2);
+    transition: all 0.5s;
+    /*transform-origin: -7rem 3rem;*//*hover旋转*/
+}
+
+/* 回形针纸片hover */
+.paper_clip_content:hover {
+    /*transform: rotateZ(-65deg);*//*hover旋转*/
+    /*transform: translateY(-65%);*/ /*若遮挡加大70%*/
+}
+
+/* endregion ======== 回形针纸片-复用 ======== */
+
+/* region ======== 阅读链接-复用 ======== */
+
+/**
+<a class="read_link" href="#">继续阅读...</a>
+*/
+
+/* 阅读链接 */
+.read_link {
+    position: relative;
+    padding: 0.3125rem 0.625rem;
+    font-weight: 600;
+    color: #4f8294;
+    background-color: white;
+    transition: all 0.5s;
+    z-index: 1;
+}
+
+/* 阅读链接hover */
+.read_link:hover {
+    color: #6c757d;
+    background-color: #e3defd;
+}
+
+/* 阅读链接hover下的before */
+.read_link:hover:before {
+    width: 100%;
+    height: 100%;
+}
+
+/* 阅读链接hover下的after */
+.read_link:hover:after {
+    width: 100%;
+    height: 100%;
+}
+
+/* 阅读链接before */
+.read_link:before {
+    position: absolute;
+    left: -0.125rem;
+    top: -0.125rem;
+    content: "";
+    height: 0;
+    width: 0;
+    border-radius: 0.125rem;
+    background-color: #6c757d;
+    transition: all 0.5s;
+    z-index: -1;
+}
+
+/* 阅读链接after */
+.read_link:after {
+    position: absolute;
+    right: -0.125rem;
+    bottom: -0.125rem;
+    content: "";
+    height: 0;
+    width: 0;
+    border-radius: 0.125rem;
+    background-color: #6c757d;
+    transition: all 0.5s;
+    z-index: -1;
+}
+
+/* endregion ======== 阅读链接-复用 ======== */
+
+/* region ======== 上下文链接-复用 ======== */
+
+/**
+<div class="next_previous_outer_div">
+    <div class="previous_div">
+        <i class="fa fa-arrow-left fa-fw"></i><a class="previous_link" href="#">标题</a>
+    </div>
+    <div class="next_div">
+        <a class="next_link" href="#">标题</a><i class="fa fa-arrow-right fa-fw"></i>
+    </div>
+</div>
+*/
+
+/* 外部div */
+.next_previous_outer_div {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* 上一div */
+.previous_div {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 33.3333%;
+}
+
+/* 上一链接 */
+.previous_link {
+    display: block;
+    position: relative;
+    max-width: 66%;
+    padding: 0.0625rem;
+    color: #6c757d;
+    text-decoration: none;
+    transition: all 0.5s;
+    /*过长省略文字，需要父元素width*/
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 上一链接hover */
+.previous_link:hover {
+    color: #3c434a;
+}
+
+/* 上一链接hover后after */
+.previous_link:hover:after {
+    width: 100%;
+}
+
+/* 上一链接after */
+.previous_link:after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    content: "";
+    height: 0.125rem;
+    width: 0;
+    background-color: #6c757d;
+    transition: all 0.5s;
+}
+
+/* 下一div */
+.next_div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 33.3333%;
+}
+
+/* 下一链接 */
+.next_link {
+    display: block;
+    position: relative;
+    max-width: 66%;
+    padding: 0.0625rem;
+    color: #555555;
+    text-decoration: none;
+    transition: all 0.5s;
+    /*过长省略文字，需要父元素width*/
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 下一链接hover */
+.next_link:hover {
+    color: #3c434a;
+}
+
+/* 下一链接hover后after */
+.next_link:hover:after {
+    width: 100%;
+}
+
+/* 下一链接after */
+.next_link:after {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    content: "";
+    height: 0.125rem;
+    width: 0;
+    background-color: #6c757d;
+    transition: all 0.5s;
+}
+
+/* endregion ======== 上下文链接-复用 ======== */
+
+/* region ======== 卡片堆叠-复用 ======== */
+
+/**
+<div class="card_stack">content</div>
+*/
+
+/* 卡片堆叠 */
+.card_stack {
+    position: relative;
+    border: 0.0625rem solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+    background-color: #fff;
+    box-shadow: 0.0625rem 0.125rem 0.3125rem 0 rgba(0, 0, 0, 0.1);
+}
+
+/* 卡片堆叠before */
+.card_stack:before {
+    position: absolute;
+    top: -0.5rem;
+    left: -0.1875rem;
+    content: "";
+    height: 100%;
+    width: 100%;
+    border: 0.0625rem solid rgba(0, 0, 0, 0.175);
+    border-radius: 0.25rem;
+    background-color: #fff;
+    box-shadow: 0.0625rem 0.125rem 0.3125rem 0 rgba(0, 0, 0, 0.05);
+    transform: rotate(-0.5deg);
+    z-index: -2;
+}
+
+/* 卡片堆叠before:media */
+@media (max-width: 576px) {
+    .card_stack:before {
+        transform: rotate(0.3deg);
+    }
+}
+
+/* 卡片堆叠after */
+.card_stack:after {
+    position: absolute;
+    top: -0.3rem;
+    left: -0.0625rem;
+    content: "";
+    height: 100%;
+    width: 100%;
+    border: 0.0625rem solid rgba(0, 0, 0, 0.175);
+    border-radius: 0.25rem;
+    background-color: #fff;
+    box-shadow: 0.0625rem 0.125rem 0.3125rem 0 rgba(0, 0, 0, 0.075);
+    transform: rotate(1deg);
+    z-index: -1;
+}
+
+/* 卡片堆叠after:media */
+@media (max-width: 576px) {
+    .card_stack:after {
+        transform: rotate(-0.1deg);
+    }
+}
+
+/* endregion ======== 卡片堆叠-复用 ======== */
+
+/* region ======== 图片轮显-复用 ========*/
+
+/* 格式
+<div id="element_id"></div> //=>js里设置
+ */
+
+/* 图片轮显外部box */
+.slider_box {
+    position: relative;
+    background-color: #ffffff;
+    border: 0.3125rem solid #fff;
+    border-radius: 0.375rem;
+    box-shadow: 0.125rem 0.125rem 0.3125rem 0 rgba(0, 0, 0, .2);
+}
+
+/* 图片轮显叠加效果 */
+.slider_box:before {
+    position: absolute;
+    top: -1rem;
+    left: 0.375rem;
+    width: 100%;
+    height: 100%;
+    content: "";
+    border: 0.3125rem solid #fff;
+    border-radius: 0.375rem;
+    background: #eff4de;
+    transform: rotate(-3deg);
+    box-shadow: 0.125rem 0.125rem 0.3125rem 0 rgba(0, 0, 0, .2);
+    z-index: -2;
+}
+
+/* 图片轮显叠加效果 */
+.slider_box:after {
+    position: absolute;
+    top: 0;
+    left: 0.125rem;
+    width: 100%;
+    height: 100%;
+    content: "";
+    border: 0.3125rem solid #fff;
+    border-radius: 0.375rem;
+    background: lightblue;
+    transform: rotate(5deg);
+    box-shadow: 0.125rem 0.125rem 0.3125rem 0 rgba(0, 0, 0, .2);
+    z-index: -1;
+}
+
+/* 图片方块 */
+.slider_cube {
+    position: absolute;
+    overflow: hidden;
+}
+
+/* 图片轮显效果方块 */
+.slider_inner_a, .slider_inner_b {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+/* endregion ======== 图片轮显-复用 ========*/
+
+/* region ======== 贴纸效果-复用 ========*/
+
+/*
+<div class="paper_stickers">
+    <div class="paper_stickers_circle"></div>
+    <div class="paper_stickers_inner">#</div>
+</div>
+ */
+
+/* 贴纸样式 */
+.paper_stickers {
+    position: relative;
+    top: 1.5rem;
+    min-height: 20rem;
+    text-align: center;
+    background-color: white;
+    border: 0.0625rem solid rgba(0, 0, 0, .15);
+    border-radius: 0.375rem;
+    box-shadow: 0.0625rem 0.125rem 0.3125rem 0 rgba(0, 0, 0, .25);
+    transition: all 0.5s;
+}
+
+/* 贴纸样式before */
+.paper_stickers:before {
+    position: absolute;
+    right: 4.9rem;
+    bottom: 0;
+    content: "";
+    height: 50%;
+    transform: rotate(-0.75deg);
+    box-shadow: 3.6rem -2rem 2.5rem 1.875rem rgba(0, 0, 0, .175);
+    transition: all 0.5s;
+    z-index: -1;
+}
+
+/* 贴纸样式after */
+.paper_stickers:after {
+    position: absolute;
+    top: -0.1875rem;
+    left: 0.25rem;
+    content: "";
+    width: 100%;
+    height: 100%;
+    border: 0.0625rem solid rgba(0, 0, 0, .1);
+    border-radius: 0.375rem;
+    z-index: -1;
+}
+
+/* 贴纸样式hover */
+.paper_stickers:hover {
+    box-shadow: 0.0625rem 0.125rem 0.3125rem 0 rgba(0, 0, 0, .1);
+}
+
+/* 贴纸样式hover的before */
+.paper_stickers:hover:before {
+    box-shadow: 4rem -2rem 1.5rem 1.875rem rgba(0, 0, 0, 0);
+}
+
+/* 贴纸样式的圆孔 */
+.paper_stickers_circle {
+    display: inline-block;
+    position: relative;
+    top: 0.5rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    background-color: #f1f1f1;
+    border: 0.0625rem solid rgba(0, 0, 0, .2);
+    border-radius: 50%;
+    box-shadow: 0.0625rem 0.125rem 0.3125rem 0 rgba(0, 0, 0, .15);
+}
+
+/* 贴纸样式的圆孔before */
+.paper_stickers_circle:before {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0.125rem;
+    content: "";
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    box-shadow: -0.0625rem 0.0625rem 0.125rem 0 rgba(0, 0, 0, 0.4);
+}
+
+/* 贴纸样式的贴纸内容 */
+.paper_stickers_inner {
+    text-align: left;
+    padding: 0.5rem;
+}
+
+/* endregion ======== 贴纸效果-复用 ========*/
+
+/* region ======== 时间线-复用 ========*/
+
+/* 依赖js实现动画效果
+<ul id="about_time_line" class="time_line">
+    <!-- 时间线头部 -->
+    <li class="time_line_item">
+        <div class="time_line_dot_line">
+            <!-- 导向线 -->
+            <div class="time_line_line"></div>
+        </div>
+        <!-- 头部时钟 -->
+        <div class="spin_clock">
+            <div class="clock_top_mark"></div>
+            <div class="clock_right_mark"></div>
+            <div class="clock_bottom_mark"></div>
+            <div class="clock_left_mark"></div>
+            <div class="clock_center_mark"></div>
+            <div class="clock_seconds"></div>
+            <div class="clock_minutes"></div>
+            <div class="clock_hours"></div>
+            <!-- 标题 -->
+            <div class="time_line_title">2018-06-30</div>
+        </div>
+    </li>
+    <!-- 时间线项目... -->
+    <li class="time_line_item">
+        <div class="time_line_dot_line">
+            <!-- 三角图标 -->
+            <div class="time_line_dot"></div>
+            <!-- 导向线 -->
+            <div class="time_line_line"></div>
+        </div>
+        <!-- 内容 -->
+        <div class="time_line_content">
+            <h6 class="time_line_content_head">2016-11-27</h6>
+            content
+        </div>
+    </li>
+    <!-- 时间线尾部 -->
+    <li class="time_line_item">
+        <div class="time_line_dot_line">
+            <!-- 三角图标 -->
+            <div class="time_line_dot"></div>
+            <!-- 导向线 -->
+            <div class="time_line_line"></div>
+        </div>
+        <!-- 尾部图标 -->
+        <div class="position_icon_outer">
+            <div class="position_icon"></div>
+            <div class="ani_circle"></div>
+            <!-- 标题 -->
+            <div class="time_line_footer">2017-11-30</div>
+        </div>
+    </li>
+</ul>
+*/
+
+/* region ==== 头部时钟-复用 ==== */
+
+/*
+<div class="spin_clock">
+    <div class="clock_top_mark"></div>
+    <div class="clock_right_mark"></div>
+    <div class="clock_bottom_mark"></div>
+    <div class="clock_left_mark"></div>
+    <div class="clock_center_mark"></div>
+    <div class="clock_seconds"></div>
+    <div class="clock_minutes"></div>
+    <div class="clock_hours"></div>
+</div>
+*/
+
+/* 时钟外部div */
+.spin_clock {
+    position: relative;
+    top: -3.125rem;
+    left: -1.5625rem;
+    width: 3rem;
+    height: 3rem;
+    border: 0.1875rem solid #67D2C8;
+    border-radius: 50%;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s linear 0s;
+}
+
+/* 12/0点标线 */
+.clock_top_mark {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 0.0625rem;
+    height: 0.1875rem;
+    margin: 0 auto;
+    background: #000000;
+}
+
+/* 3点标线 */
+.clock_right_mark {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 0.1875rem;
+    height: 0.0625rem;
+    margin: auto 0;
+    background: #000000;
+}
+
+/* 6点标线 */
+.clock_bottom_mark {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 0.0625rem;
+    height: 0.1875rem;
+    margin: 0 auto;
+    background: #000000;
+}
+
+/* 9点标线 */
+.clock_left_mark {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 0.1875rem;
+    height: 0.0625rem;
+    margin: auto 0;
+    background: #000000;
+}
+
+/* 中心原点 */
+.clock_center_mark {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    height: 0.375rem;
+    width: 0.375rem;
+    margin: auto;
+    background: #000000;
+    border-radius: 50%;
+}
+
+/* 秒针div动画 */
+.clock_seconds {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 0.0625rem;
+    height: 100%;
+    margin: 0 auto;
+    animation: clock_spin 3s linear 0s infinite;
+    z-index: -1;
+}
+
+/* 秒针div */
+.clock_seconds:before {
+    position: absolute;
+    bottom: 30%;
+    content: "";
+    height: 60%;
+    width: 0.0625rem;
+    background: black;
+}
+
+/* 分针div动画 */
+.clock_minutes {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 0.125rem;
+    height: 100%;
+    margin: 0 auto;
+    animation: clock_spin 18s linear -12s infinite;
+    z-index: -2;
+}
+
+/* 分针div */
+.clock_minutes:before {
+    position: absolute;
+    bottom: 35%;
+    content: "";
+    height: 50%;
+    width: 0.125rem;
+    background: grey;
+}
+
+/* 时针div动画 */
+.clock_hours {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 0.1875rem;
+    height: 100%;
+    margin: 0 auto;
+    animation: clock_spin 108s linear -21s infinite;
+    z-index: -3;
+}
+
+/* 时针div */
+.clock_hours:before {
+    position: absolute;
+    bottom: 40%;
+    content: "";
+    height: 40%;
+    width: 0.1875rem;
+    background: red;
+    border-radius: 0.25rem;
+}
+
+/* 时钟指针旋转动画 */
+@keyframes clock_spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* endregion ==== 头部时钟-复用 ==== */
+
+/* region ==== 尾部图标-复用 ==== */
+
+/*
+<div class="position_icon_outer">
+    <div class="position_icon"></div>
+    <div class="ani_circle"></div>
+</div>
+*/
+
+/* 定位图标外部div */
+.position_icon_outer {
+    position: relative;
+    top: 3.85rem;
+    left: -1rem;
+    opacity: 0;
+    z-index: 1;
+    transition: opacity 0.3s linear 1s;
+}
+
+/* 定位图标 */
+.position_icon {
+    display: inline-block;
+    position: relative;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50% 50% 50% 0;
+    background: #938ea5;
+    transform: rotate(-45deg);
+}
+
+/* 定位图标after */
+.position_icon:after {
+    position: absolute;
+    content: "";
+    width: 1rem;
+    height: 1rem;
+    margin: 0.5rem;
+    background: #ededed;
+    border-radius: 50%;
+}
+
+/* 图标下阴影圆形 */
+.ani_circle {
+    position: relative;
+    top: -0.125rem;
+    left: 0.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    height: 1rem;
+    width: 1rem;
+    transform: rotateX(60deg);
+    z-index: -1;
+}
+
+/* 圆形动画 */
+.ani_circle:after {
+    position: absolute;
+    top: -0.875rem;
+    left: -0.75rem;
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 50%;
+    content: "";
+    box-shadow: 0 0 0.0625rem 0.125rem #89849b;
+    animation: rounded_circle 1s ease-out infinite;
+}
+
+/* 动画效果 */
+@keyframes rounded_circle {
+    0% {
+        transform: scale(0.1, 0.1);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.1, 1.1);
+        opacity: 0;
+    }
+}
+
+/* endregion ==== 尾部图标-复用 ==== */
+
+/* 时间线 */
+.time_line {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin: 4rem 0;
+    padding: 0;
+}
+
+/* 项目 */
+.time_line_item {
+    position: relative;
+    width: 50%;
+    margin: 0.25rem 0;
+}
+
+/* 项目样式 */
+.time_line .time_line_item {
+    left: 0;
+    padding-left: 3rem;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+/* 项目样式 */
+@media (min-width: 576px) {
+    /* 项目大屏样式 */
+    .time_line .time_line_item {
+        padding-left: 0;
+        left: 50%;
+        width: 50%;
+    }
+
+    /* 项目奇偶差异 */
+    .time_line .time_line_item:nth-child(odd) {
+        left: 0;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+/* 头部文字 */
+.time_line_title {
+    position: absolute;
+    top: 3rem;
+    left: -1.3125rem;
+    width: 5.125rem;
+    font-weight: 500;
+    color: #6c757d;
+}
+
+/* 底部文字 */
+.time_line_footer {
+    position: absolute;
+    top: -2rem;
+    left: -1.4375rem;
+    width: 4.875rem;
+    font-weight: 500;
+    color: #6c757d;
+}
+
+/* 导向点&线*/
+.time_line_dot_line {
+    position: absolute;
+    width: 12.5%;
+    height: 100%;
+}
+
+/* 指向三角 */
+.time_line_dot {
+    display: inline-block;
+    position: absolute;
+    width: 1rem;
+    height: 0.625rem;
+    background: linear-gradient(to top, rgba(188, 203, 222, 0.6) 0, rgb(154, 170, 189) 0.25rem, rgba(188, 203, 222, 0.6) 0.3125rem, rgba(188, 203, 222, 0.2) 0.375rem, rgba(188, 203, 222, 0.1) 0.5625rem, rgba(255, 255, 255, 0) 0.625rem);
+    opacity: 0;
+    transition: opacity 0.15s linear 0s;
+    z-index: 1;
+}
+
+/* 指向三角before */
+.time_line_dot:before {
+    position: absolute;
+    top: 0.5625rem;
+    left: -0.3125rem;
+    content: "";
+    width: 1rem;
+    height: 0.625rem;
+    background: linear-gradient(to top, rgba(188, 203, 222, 0.6) 0, rgb(154, 170, 189) 0.25rem, rgba(188, 203, 222, 0.6) 0.3125rem, rgba(188, 203, 222, 0.2) 0.375rem, rgba(188, 203, 222, 0.1) 0.5625rem, rgba(255, 255, 255, 0) 0.625rem);
+    transform: rotate(-120deg);
+}
+
+/* 指向三角after */
+.time_line_dot:after {
+    position: absolute;
+    top: 0.5625rem;
+    left: 0.3125rem;
+    content: "";
+    width: 1rem;
+    height: 0.625rem;
+    background: linear-gradient(to top, rgba(188, 203, 222, 0.6) 0, rgb(154, 170, 189) 0.25rem, rgba(188, 203, 222, 0.6) 0.3125rem, rgba(188, 203, 222, 0.2) 0.375rem, rgba(188, 203, 222, 0.1) 0.5625rem, rgba(255, 255, 255, 0) 0.625rem);
+    transform: rotate(120deg);
+}
+
+/* 指向三角样式 */
+.time_line .time_line_item .time_line_dot_line .time_line_dot {
+    top: -0.3125rem;
+    left: -0.625rem;
+    transform: rotate(-90deg);
+}
+
+/* 指向三角奇偶变向 */
+@media (min-width: 576px) {
+    /* 指向三角奇偶变向 */
+    .time_line .time_line_item:nth-child(odd) .time_line_dot_line .time_line_dot {
+        left: auto;
+        top: -0.3125rem;
+        right: -0.5625rem;
+        transform: rotate(90deg);
+    }
+}
+
+/* 时间线段div */
+.time_line_line {
+    display: inline-block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+/* 时间线段div样式 */
+.time_line .time_line_item .time_line_dot_line .time_line_line {
+    left: -0.0625rem;
+}
+
+/* 时间线段div奇偶定位 */
+@media (min-width: 576px) {
+    .time_line .time_line_item:nth-child(odd) .time_line_dot_line .time_line_line {
+        right: 0;
+    }
+}
+
+/* 时间线段-横线 */
+.time_line_line:before {
+    position: absolute;
+    top: 0;
+    bottom: auto;
+    content: "";
+    height: 0.0625rem;
+    width: 0;
+    background-color: rgba(188, 203, 222, 1);
+    transition: width 0.3s linear 0.175s;
+}
+
+/* 时间线段-横线样式 */
+.time_line .time_line_item .time_line_dot_line .time_line_line:before {
+    left: 20%;
+    right: auto;
+}
+
+/* 时间线段-横线奇偶定位 */
+@media (min-width: 576px) {
+    .time_line .time_line_item:nth-child(odd) .time_line_dot_line .time_line_line:before {
+        left: auto;
+        right: 20%;
+    }
+}
+
+/* 时间线段-竖线 */
+.time_line_line:after {
+    position: absolute;
+    top: 0;
+    bottom: auto;
+    content: "";
+    height: 0;
+    width: 0.0625rem;
+    background-color: rgba(188, 203, 222, 1);
+    transition: height 1s linear 0s;
+}
+
+/* 时间线段-竖线样式 */
+.time_line .time_line_item .time_line_dot_line .time_line_line:after {
+    left: 0;
+    right: auto;
+}
+
+/* 时间线段-竖线奇偶定位 */
+@media (min-width: 576px) {
+    .time_line .time_line_item:nth-child(odd) .time_line_dot_line .time_line_line:after {
+        left: auto;
+        right: -0.0625rem;
+    }
+}
+
+/* 时间线内容div */
+.time_line_content {
+    position: relative;
+    width: 87.5%;
+    font-size: 80%;
+    padding: 0.75rem 1.25rem;
+    border: 0.0625rem solid #b7c6d9;
+    border-radius: 0.25rem;
+    opacity: 0;
+    overflow: hidden;
+    transition: opacity 0.5s linear 0.2s;
+    box-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.15);
+}
+
+/* 时间线内容div */
+@media (min-width: 576px) {
+    .time_line .time_line_item:nth-child(odd) .time_line_content {
+        box-shadow: -0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.15);
+    }
+}
+
+/* 时间线内容div下p */
+.time_line_content p {
+    margin-bottom: 0.5rem;
+}
+
+/* 时间线内容div下p */
+.time_line_content p:last-of-type {
+    margin-bottom: 0;
+}
+
+/* 时间线内容div样式 */
+.time_line .time_line_item .time_line_content {
+    left: 12.5%;
+    text-align: left;
+}
+
+/* 内容标题样式 */
+.time_line_content_head {
+    color: #505b63;
+    padding-bottom: 0.25rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 0.0625rem solid #dee2e6;
+}
+
+/* 时间线内容div奇偶定位 */
+@media (min-width: 576px) {
+    .time_line .time_line_item:nth-child(odd) .time_line_content {
+        left: -12.5%;
+    }
+
+    /* 内容标题样式 */
+    .time_line .time_line_item:nth-child(odd) .time_line_content .time_line_content_head {
+        text-align: right;
+    }
+}
+
+/* 第一个项目->头部样式 */
+.time_line .time_line_item:first-of-type {
+    display: flex;
+    flex-direction: column;
+    left: 0;
+    width: 100%;
+    margin: 0;
+}
+
+/* 第一个项目->头部横导向线样式 */
+.time_line .time_line_item:first-of-type .time_line_dot_line .time_line_line:before {
+    content: none;
+}
+
+/* 第一个项目->头部样式奇偶差异 */
+@media (min-width: 576px) {
+
+    /* 第一个项目->头部时钟 */
+    .spin_clock {
+        left: 0;
+    }
+
+    /* 第一个项目->头部flex对齐 */
+    .time_line .time_line_item:first-of-type {
+        align-items: center;
+    }
+
+    /* 第一个项目->头部导向线样式 */
+    .time_line .time_line_item:first-of-type .time_line_dot_line .time_line_line:after {
+        left: 0;
+        right: 0;
+        margin: 0 50%;
+    }
+}
+
+/* 最后一个一个项目->尾部样式 */
+.time_line .time_line_item:last-of-type {
+    display: flex;
+    flex-direction: column;
+    left: 0;
+    width: 100%;
+    margin: 0;
+}
+
+/* 最后一个一个项目->尾部样式 */
+.time_line .time_line_item:last-of-type .time_line_dot_line .time_line_dot {
+    left: -0.5625rem;
+    right: 0;
+    transform: rotate(0deg);
+}
+
+/* 最后一个一个项目->尾部样式 */
+.time_line .time_line_item:last-of-type .time_line_dot_line .time_line_line:before {
+    content: none;
+}
+
+/* 最后一个一个项目->尾部样式 */
+@media (min-width: 576px) {
+
+    /* 最后一个一个项目->尾部图标 */
+    .position_icon_outer {
+        left: 0;
+    }
+
+    /* 最后一个一个项目->尾部flex对齐 */
+    .time_line .time_line_item:last-of-type {
+        align-items: center;
+    }
+
+    /* 最后一个一个项目->尾部导向线样式 */
+    .time_line .time_line_item:last-of-type .time_line_dot_line .time_line_line:after {
+        left: 0;
+        right: 0;
+        margin: 0 50%;
+    }
+
+    /* 最后一个一个项目->尾部样式 */
+    .time_line .time_line_item:last-of-type .time_line_dot_line .time_line_dot {
+        margin: 0 50%;
+    }
+}
+
+/* ====== 通过js控制time_line_js类 ====== */
+
+/* 定位图标外部div-js */
+.time_line_js .position_icon_outer {
+    opacity: 1;
+}
+
+/* 时钟外部div-js */
+.time_line_js .spin_clock {
+    opacity: 1;
+}
+
+/* 时间线段-横线-js */
+.time_line_js .time_line_line:before {
+    width: 90%;
+    box-shadow: 0 0 0.0625rem 0.0625rem rgba(188, 203, 222, 0.6)
+}
+
+/* 时间线段-竖线-js */
+.time_line_js .time_line_line:after {
+    height: 110%;
+    box-shadow: 0 0 0.125rem 0.125rem rgba(188, 203, 222, 0.6);
+}
+
+/* 时间线内容div-js */
+.time_line .time_line_item.time_line_js .time_line_content {
+    opacity: 1;
+    transform-origin: 0 0;
+    animation: show_content 0.9s ease-out 0.1s;
+}
+
+/* 时间线内容div奇偶差异-js */
+@media (min-width: 576px) {
+    .time_line .time_line_item:nth-child(odd).time_line_js .time_line_content {
+        opacity: 1;
+        transform-origin: 100% 0;
+        animation: show_content 0.9s ease-out 0.1s;
+    }
+}
+
+/* 时间线内容动画效果 */
+@keyframes show_content {
+    0% {
+        transform: scale(0.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* 指向三角-js */
+.time_line .time_line_item.time_line_js .time_line_dot {
+    opacity: 1;
+    transform-origin: center center;
+    animation: show_dot_even 0.2s linear 0s;
+}
+
+/* 指向三角奇偶差异-js */
+@media (min-width: 576px) {
+    .time_line .time_line_item:nth-child(odd).time_line_js .time_line_dot {
+        opacity: 1;
+        transform-origin: center center;
+        animation: show_dot_odd 0.2s linear 0s;
+    }
+}
+
+/* 指向三角end-js */
+.time_line .time_line_item:last-of-type.time_line_js .time_line_dot {
+    opacity: 1;
+    transform-origin: center center;
+    animation: show_dot_end 0.2s linear 0s;
+}
+
+/* 指向三角odd动画效果 */
+@keyframes show_dot_odd {
+    0% {
+        transform: scaleX(0.1) rotate(90deg);
+    }
+    100% {
+        transform: scaleX(1) rotate(90deg);
+    }
+}
+
+/* 指向三角even动画效果 */
+@keyframes show_dot_even {
+    0% {
+        transform: scaleX(0.1) rotate(-90deg);
+    }
+    100% {
+        transform: scaleX(1) rotate(-90deg);
+    }
+}
+
+/* 指向三角end动画效果 */
+@keyframes show_dot_end {
+    0% {
+        transform: scaleY(0.1);
+    }
+    100% {
+        transform: scaleY(1);
+    }
+}
+
+/* endregion ======== 时间线-复用 ========*/

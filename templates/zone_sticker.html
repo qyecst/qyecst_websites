@@ -1,0 +1,31 @@
+{# List(String)) all_tag, List(String)) all_category #}
+{% from "_macros.html" import show_tag, show_category %}
+<!-- 归类 -->
+<!--
+<div class="text-secondary">
+    <h6>归类</h6>
+    {{ show_category(all_category) }}
+</div>
+<hr class="mt-2 mb-1"/>
+-->
+<!-- 标签 -->
+<div class="text-secondary">
+    <h6>标签</h6>
+    {{ show_tag(all_tag) }}
+</div>
+<!-- 分隔线 -->
+<hr class="mt-2 mb-1"/>
+<!-- 关于 -->
+<div class="text-secondary">
+    <h6>关于</h6>
+    <div class="text-secondary">
+        <a data-toggle="tooltip" data-html="true" class="text-secondary" rel="external nofollow noopener noreferrer" target="_blank" title="<span class='small'><del>这是...全球最大的同性交友网站?!</del>Σ(っ°Д°;)っ</span>" href="https://github.com/qyecst"><i class="fa fa-github fa-fw"></i></a>
+        <a data-toggle="tooltip" data-html="true" class="text-secondary" rel="external nofollow noopener noreferrer" target="_blank" title="<span class='small'><del>别发了,收不到邮件的!</del>_(:з」∠)_</span>" href="mailto:qyecst@qyecst.cn"><i class="fa fa-envelope fa-fw"></i></a>
+        <a data-toggle="tooltip" data-html="true" class="text-secondary" rel="external nofollow noopener noreferrer" target="_blank" title="<span class='small'><del>看到了吗，那来自G胖的微笑!</del>←_←</span>" href="https://steamcommunity.com/id/qyecst"><i class="fa fa-steam-square fa-fw"></i></a>
+        <a data-toggle="tooltip" data-html="true" class="text-secondary" rel="external nofollow noopener noreferrer" target="_blank" title="<span class='small'><del>别点了，打不开的!</del>[・_・?]</span>" href="https://twitter.com/qyecst"><i class="fa fa-twitter fa-fw"></i></a>
+        <a data-toggle="tooltip" data-html="true" class="text-secondary inner_link_mk" title="<span class='small'><del>反正没人看，我也懒得写..</del>(눈_눈)</span>" href="{{ url_for('router.about') }}"><i class="fa fa-info-circle fa-fw"></i></a>
+    </div>
+    <del class="small">这个人真的很懒，什么都不想写...</del>
+    <br/>
+    <span class="small">已<del>时好时坏的</del>运行了<span id="qyecst_running_time"><del>其实没几天</del></span></span>
+</div>

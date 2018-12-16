@@ -1,2 +1,288 @@
 # qyecst_websites
-各种样式的网站
+
+[个人网站](https://www.qyecst.cn)
+
+## 安装
+
+安装依赖:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirement
+pip install uwsgi
+```
+
+uwsgi配置:
+
+```uwsgi
+# http://uwsgi-docs.readthedocs.io/en/latest/Options.html
+[uwsgi]
+# 使用默认协议绑定到指定的UNIX/TCP套接字
+socket = 0.0.0.0:80
+# 指定默认的套接字协议
+#protocol = uwsgi
+# 产生工作进程数量
+processes = 2
+# 串行化accept，避免一个请求唤醒所有进程，但只有一个进程连接成功
+thunder-lock = true
+# harakiri超时，秒，一个请求花费时间超过此值，请求会被丢弃，资源回收
+#harakiri = 10
+# 在app加载后，进程后台运行，打印日志。daemonize: 直接后台运行
+#daemonize2 = site.v4.uwsgi.log
+# 设置套接字监听队列大小
+#listen = 100
+# 设置socket文件的权限
+#chmod-socket = 666
+# 允许你在app程序中产生一个子线程
+enable-threads = true
+# 给进程设置一些有意义的名字，如'uWSGI master', 'uWSGI worker 1'
+#auto-procname = true
+# 进程名前缀，空格分隔，如'your-prefix process-name'
+#procname-prefix-spaced = sitev4
+# 启用主进程
+master = true
+# 工作进程请求数的上限，每个进程到次数会自动重启/默默地对抗内存泄漏
+#max-requests = 10000
+# 不记录请求日志，只记录错误/内部消息
+disable-logging = true
+# pid文件路径
+pidfile = /tmp/uwsgi.pid
+# 改变默认目录到指定目录
+chdir = /site/
+# 改变默认根目录到指定目录
+#chroot = /site/
+# user id/name
+#uid = <run_user_name>
+# gropu id/name
+#gid = <run_user_group_name>
+# 当文件改变时，重启uwsgi，如`touch reload.txt`，则uwsgi会重启
+touch-reload = /site/reload.mark
+# 启动时只分配n个进程/至少1，如果当前进程不足以处理收到的请求，按请求量按需启动其他进程，直到进程达到预先设置的个数
+#cheaper = 1
+# 进程空闲超时后减少进程数，秒
+#cheaper-idle = 15
+# 线程模式，进程内几个线程
+threads = 1
+# 入口文件
+wsgi-file = app.py
+# 启动入口
+callable = app
+# 虚拟环境
+virtualenv = /site/venv/
+# 退出时清理文件
+vacuum = true
+```
+
+nginx配置:
+
+```nginx
+user  nginx nginx;
+worker_processes  auto;
+pid  /var/run/nginx.pid;
+
+events {
+    use  epoll;
+    worker_connections  1024;
+    multi_accept  on;
+    accept_mutex  on;
+}
+
+http {
+    server_tokens  off;
+    charset  utf-8;
+    include  mime.types;
+    default_type  application/octet-stream;
+    sendfile  on;
+    access_log  off;
+    error_log  off;
+    ## include  /etc/nginx/conf.d/*.conf;
+    server {
+        listen  80;
+        server_name  www.qyecst.cn localhost;
+        location / {
+            #root  /;
+            #index  index.html;
+            include  uwsgi_params;
+            #uwsgi_pass  unix:/uwsgi/uwsgi.sock;
+            uwsgi_pass  website_uwsgi:80;
+        }
+    }
+}
+```
+
+Dockerfile文件:
+
+```docker
+FROM python
+MAINTAINER qyecst qyecst@qyecst.cn
+EXPOSE 80
+WORKDIR /site/
+ENV shell /bin/bash
+CMD /bin/bash -c 'python3 -m venv venv; \
+                 source ./venv/bin/activate; \
+                 pip install -r ./requirement; \
+                 pip install uwsgi; \
+                 uwsgi ./uwsgi.ini'
+```
+
+docker-compose文件:
+
+```dockercompose
+version: "3.5"
+services:
+    proxy_nginx:
+        image: nginx
+        restart: always
+        container_name: proxy_nginx
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - ./proxy/nginx.conf:/etc/nginx/nginx.conf:ro
+            - ./proxy/conf.d/:/etc/nginx/conf.d/:ro
+            - ./proxy/ssl_files/:/etc/nginx/ssl_files/:ro
+website_nginx:
+    image: nginx
+    restart: always
+    container_name: website_nginx
+    expose:
+        - "80"
+    volumes:
+        - ./website/nginx.conf:/etc/nginx/nginx.conf:ro
+        - ./website/index.html:/index.html:ro
+website_uwsgi:
+    build: ./website/
+    image: my_uwsgi
+    restart: always
+    container_name: website_uwsgi
+    expose:
+        - "80"
+    volumes:
+        - ./website/content_dir/:/site/:rw
+```
+
+## 依赖
+
+```txt
+(Python venv) pip install flask-apscheduler mistune pygments
+--- back-end ---
+Python:
+    version: v3.6.5
+    from: https://www.python.org/
+    license: PSF license (https://docs.python.org/3/license.html)
+
+APScheduler:
+    version: v3.5.1
+    from: https://github.com/agronholm/apscheduler
+    license: MIT License (https://github.com/agronholm/apscheduler/blob/master/LICENSE.txt)
+
+click:
+    version: v6.7
+    from: https://github.com/pallets/click
+    license: BSD License (https://github.com/pallets/click/blob/master/LICENSE)
+
+Flask:
+    version: v1.0.2
+    from: https://github.com/pallets/flask
+    license: BSD License (https://github.com/pallets/flask/blob/master/LICENSE)
+
+Flask-APScheduler:
+    version: v1.8.0
+    from: https://github.com/viniciuschiele/flask-apscheduler
+    license: Apache 2.0 License (https://github.com/viniciuschiele/flask-apscheduler/blob/master/LICENSE)
+
+itsdangerous:
+    version: v0.24
+    from: https://github.com/pallets/itsdangerous
+    license: BSD License (https://github.com/pallets/itsdangerous/blob/master/LICENSE)
+
+Jinja2:
+    version: v2.10
+    from: https://github.com/pallets/jinja
+    license: BSD License (https://github.com/pallets/jinja/blob/master/LICENSE)
+
+MarkupSafe:
+    version: v1.0
+    from: https://github.com/pallets/markupsafe
+    license: BSD License (https://github.com/pallets/markupsafe/blob/master/LICENSE.rst)
+
+mistune:
+    version: v0.8.3
+    from: https://github.com/lepture/mistune
+    license: BSD License (https://github.com/lepture/mistune/blob/master/LICENSE)
+
+Pygments:
+    version: v2.2.0
+    from: http://pygments.org/
+    license: BSD License (http://pygments.org/faq/?highlight=license)
+
+python-dateutil:
+    version: v2.7.3
+    from: https://github.com/dateutil/dateutil
+    license: [dual license] Apache 2.0 License or the BSD 3-Clause License (https://github.com/dateutil/dateutil#license)
+
+pytz:
+    version: v2018.5
+    from: https://pythonhosted.org/pytz/
+    license: MIT License (https://pythonhosted.org/pytz/#license)
+
+six:
+    version: v1.11.0
+    from: https://pypi.org/project/six/
+    license: MIT License (https://pypi.org/project/six/)
+
+tzlocal:
+    version: v1.5.1
+    from: https://github.com/regebro/tzlocal
+    license: MIT License (https://github.com/regebro/tzlocal/blob/master/LICENSE.txt)
+
+Werkzeug:
+    version: v0.14.1
+    from: https://github.com/pallets/werkzeug
+    license: BSD License (https://github.com/pallets/werkzeug/blob/master/LICENSE)
+
+--- front-end ---
+Bootstrap:
+    version: v4.1.1
+    from: https://getbootstrap.com/
+    license: MIT License (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+
+jQuery:
+    version: v3.3.1
+    from: https://jquery.com/
+    license: MIT License (https://github.com/jquery/jquery/blob/master/LICENSE.txt)
+
+Popper.js:
+    version: v1.14.3
+    from: https://popper.js.org
+    license: MIT License (https://github.com/FezVrasta/popper.js/blob/master/LICENSE.md)
+
+Font Awesome:
+    version: v4.7.0
+    from: https://fontawesome.com/
+    license:
+        font: SIL OFL 1.1 (http://scripts.sil.org/OFL)
+        code: MIT License (http://opensource.org/licenses/mit-license.html)
+        documentation: CC BY 3.0 (http://creativecommons.org/licenses/by/3.0/)
+
+QR Code Generator:
+    version: v1.4.0
+    from: https://github.com/kazuhikoarase/qrcode-generator/tree/master/js
+    license: MIT License (https://github.com/kazuhikoarase/qrcode-generator/blob/master/LICENSE)
+
+Lightbox2 (by Lokesh Dhakar):
+    version: v2.10.0
+    from: https://lokeshdhakar.com/projects/lightbox2/
+    license: MIT License (https://github.com/lokesh/lightbox2/blob/dev/LICENSE)
+
+Pygments CSS:
+    version: Pygments hightlight default CSS style
+    from: http://pygments.org/
+    license: BSD license (http://pygments.org/faq/?highlight=license)
+
+GitHub Markdown CSS:
+    version: v2.10.0
+    from: https://github.com/sindresorhus/github-markdown-css
+    license: MIT License (https://github.com/sindresorhus/github-markdown-css/blob/gh-pages/license)
+```
