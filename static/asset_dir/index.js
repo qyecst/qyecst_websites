@@ -41,7 +41,7 @@ BODY.on("click", "#search_submit", function () {
     //非undefined/null/空格检测
     if (!text || !/\S.*/.test(text)) return false;  // 阻止提交
     let form = $("#search_form");
-    get_submit_func(form.attr("action"), form.serialize());
+    get_submit_func(form.attr("action")+"?"+form.serialize(),{});
     console.log(form);
     return false;  // 阻止提交
 });
@@ -54,7 +54,7 @@ BODY.on("keypress", "#search_text", function (event) {
         //非undefined/null/空格检测
         if (!text || !/\S.*/.test(text)) return false;  // 阻止提交
         let form = $("#search_form");
-        get_submit_func(form.attr("action"), form.serialize());
+        get_submit_func(form.attr("action")+"?"+form.serialize(),{});
         return false;  // 阻止提交
     }
 });
