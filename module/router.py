@@ -20,6 +20,13 @@ def reload_posts(summary_obj):
     try:
         # 文章查找路径
         post_dir = current_app.config.get("USER_POST_DIR")
+        # urls map
+        post_url_file = current_app.config.get("USER_URL_FILE")
+        post_urls = None
+        with open(post_url_file, "r", encoding="utf8") as f:
+            post_urls = json.loads(f.read())
+        if not post_urls:
+            raise Exception('urls.json not found')
         # 获取基础路径 /basic_url/render_path，浏览器使用，故替换为"/"
         basic_url = (post_dir.replace(BASE_DIR, "") + os.path.sep).replace(os.path.sep, "/")
         # 新文章信息
@@ -44,7 +51,11 @@ def reload_posts(summary_obj):
                     info = json.loads(re.search("{(.*\n)*?}", all_str).group())
                     # 下述post初始化
                     new_post = Post()
-                    new_post.filename = file.replace(".md", "")  # 文件名，用于id
+                    #new_post.filename = file.replace(".md", "")  # 文件名，用于id
+                    if post_urls.get(file):
+                        new_post.filename = post_urls.get(file)
+                    else:
+                        raise Exception('urls map fail')
                     new_post.title = info.get("title")  # 文章标题
                     new_post.create = info.get("create")  # 创建时间
                     new_post.modify = info.get("modify")  # 修改时间
@@ -66,7 +77,8 @@ def reload_posts(summary_obj):
                     # 加入新文章信息
                     new_post_dict[new_post.filename] = new_post
         # 按创建时间反向排序，大的在前
-        sorted_post_list = sorted(new_post_dict.values(), key=lambda ele: ele.create, reverse=True)
+        #sorted_post_list = sorted(new_post_dict.values(), key=lambda ele: ele.create, reverse=True)
+        sorted_post_list = sorted(new_post_dict.values(), key=lambda ele: ele.filename)
         # post添加前后post
         for i in range(len(sorted_post_list)):
             if i > 0:
@@ -194,14 +206,14 @@ def index():
     max_page = math.ceil(len(SUMMARY.post_dict) / page_item)
     cur_page = 1
     if is_ajax:
-        res = {"title": None, "html": render_template("zone_main.html", content_type="preview", post_list=sorted(SUMMARY.post_dict.values(), key=lambda ele: ele.create, reverse=True)[:page_item], current_page=cur_page, max_page=max_page,
+        res = {"title": None, "html": render_template("zone_main.html", content_type="preview", post_list=sorted(SUMMARY.post_dict.values(), key=lambda ele: ele.filename)[:page_item], current_page=cur_page, max_page=max_page,
                                                       post=None,
                                                       search_result=None, keytype=None, keyword=None, search_current=None, search_max=None)}
         return jsonify(res)
     return render_template("index.html",
                            zone_title=render_template("zone_title.html", title=None),
                            zone_hitokoto=render_template("zone_hitokoto.html", hitokoto=SUMMARY.get_random_hitokoto()),
-                           zone_main=render_template("zone_main.html", content_type="preview", post_list=sorted(SUMMARY.post_dict.values(), key=lambda ele: ele.create, reverse=True)[:page_item], current_page=cur_page, max_page=max_page,
+                           zone_main=render_template("zone_main.html", content_type="preview", post_list=sorted(SUMMARY.post_dict.values(), key=lambda ele: ele.filename)[:page_item], current_page=cur_page, max_page=max_page,
                                                      post=None,
                                                      search_result=None, keytype=None, keyword=None, search_current=None, search_max=None),
                            zone_toc=render_template("zone_toc.html", post_toc=None),
@@ -218,14 +230,14 @@ def page(page_num):
     max_page = math.ceil(len(SUMMARY.post_dict) / page_item)
     cur_page = page_num if page_num <= max_page else 1
     if is_ajax:
-        res = {"title": None, "html": render_template("zone_main.html", content_type="preview", post_list=sorted(SUMMARY.post_dict.values(), key=lambda ele: ele.create, reverse=True)[page_item * (cur_page - 1):page_item * cur_page], current_page=cur_page, max_page=max_page,
+        res = {"title": None, "html": render_template("zone_main.html", content_type="preview", post_list=sorted(SUMMARY.post_dict.values(), key=lambda ele: ele.filename)[page_item * (cur_page - 1):page_item * cur_page], current_page=cur_page, max_page=max_page,
                                                       post=None,
                                                       search_result=None, keytype=None, keyword=None, search_current=None, search_max=None)}
         return jsonify(res)
     return render_template("index.html",
                            zone_title=render_template("zone_title.html", title=None),
                            zone_hitokoto=render_template("zone_hitokoto.html", hitokoto=SUMMARY.get_random_hitokoto()),
-                           zone_main=render_template("zone_main.html", content_type="preview", post_list=sorted(SUMMARY.post_dict.values(), key=lambda ele: ele.create, reverse=True)[page_item * (cur_page - 1):page_item * cur_page], current_page=cur_page, max_page=max_page,
+                           zone_main=render_template("zone_main.html", content_type="preview", post_list=sorted(SUMMARY.post_dict.values(), key=lambda ele: ele.filename)[page_item * (cur_page - 1):page_item * cur_page], current_page=cur_page, max_page=max_page,
                                                      post=None,
                                                      search_result=None, keytype=None, keyword=None, search_current=None, search_max=None),
                            zone_toc=render_template("zone_toc.html", post_toc=None),

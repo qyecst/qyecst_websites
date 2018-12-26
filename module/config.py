@@ -13,7 +13,9 @@ class Config:
     # md文件目录，只遍历当前目录。/**手动调用**/
     USER_POST_DIR = os.path.join(BASE_DIR, "static", "post_dir")
     # hitokoto文件所在位置。/**手动调用**/
-    USER_HITOKOTO_FILE = os.path.join(BASE_DIR, "static", "post_dir", "收集的一言.json")
+    USER_HITOKOTO_FILE = os.path.join(BASE_DIR, "static", "post_dir", "hitokoto.json")
+    # urlmap文件所在位置。/**手动调用**/
+    USER_URL_FILE = os.path.join(BASE_DIR, "static", "post_dir", "urls.json")
     # endregion ======== USER ========
 
     # region ======== FLASK配置 ========

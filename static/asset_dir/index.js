@@ -1289,8 +1289,8 @@ $(function () {
     new Slider({
         id: "qyecst_show_images",
         images: [
-            "/static/picture_dir/12.jpg",
-            "/static/picture_dir/2019.jpeg"
+            "/static/picture_dir/1.jpg",
+            // "/static/picture_dir/2019.jpeg"
            // "/static/picture_dir/1.jpg",
            // "/static/picture_dir/2.jpg",
            // "/static/picture_dir/3.jpg",
