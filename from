@@ -118,3 +118,8 @@ GitHub Markdown CSS:
     version: v2.10.0
     from: https://github.com/sindresorhus/github-markdown-css
     license: MIT License (https://github.com/sindresorhus/github-markdown-css/blob/gh-pages/license)
+
+GitHub Ignore (.gitignore):
+    version: https://github.com/github/gitignore/commit/866572d481b1a2d3dfa11fe423c0ae3ed735d3ed
+    from: https://github.com/github/gitignore/blob/master/Python.gitignore
+    license: CC0 License (https://github.com/github/gitignore/blob/master/LICENSE)
